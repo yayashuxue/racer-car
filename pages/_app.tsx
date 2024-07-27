@@ -4,6 +4,7 @@ import '../styles/globals.css';
 import { PrivyProvider } from '@privy-io/react-auth';
 // Make sure to import these from `@privy-io/wagmi`, not `wagmi`
 import { WagmiProvider } from '@privy-io/wagmi';
+import '../styles/GameHandler.css';
 
 import { ThemeProvider, createTheme } from '@mui/material';
 // import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
@@ -20,7 +21,6 @@ import '@fontsource/aldrich/400.css';
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 const client = new QueryClient();
-
 
 const disableConsole = () => {
   if (process.env.NODE_ENV === 'production') {
