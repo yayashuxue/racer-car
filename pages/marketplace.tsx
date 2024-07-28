@@ -44,25 +44,25 @@ const staticData = [
     cost: 100,
     imageUrl: '/racer-car-elements/car-1.png',
     specialEffects: 'Effect 1',
-    name: 'FORD',
+    name: 'DODGE CHARGER',
   },
   {
     cost: 250,
     imageUrl: '/racer-car-elements/car-2.png',
     specialEffects: 'Effect 2',
-    name: 'Truck',
+    name: 'Ford F150',
   },
   {
     cost: 500,
     imageUrl: '/racer-car-elements/car-3.png',
     specialEffects: 'Effect 3',
-    name: 'Honda 🐂',
+    name: 'AUDI S3 🐂',
   },
   {
     cost: 1000,
     imageUrl: '/racer-car-elements/car-4.png',
     specialEffects: 'Effect 3',
-    name: 'Maybach',
+    name: 'rolls royce',
   },
   {
     cost: 2000,
@@ -74,13 +74,13 @@ const staticData = [
     cost: 3000,
     imageUrl: '/racer-car-elements/car-6.png',
     specialEffects: 'Effect 5',
-    name: 'Bugatti',
+    name: 'Pagani',
   },
   {
     cost: 4000,
     imageUrl: '/racer-car-elements/car-7.png',
     specialEffects: 'Effect 5',
-    name: 'Pagani',
+    name: 'mclaren',
   },
   {
     cost: 100000,
@@ -150,7 +150,6 @@ const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
 }) => {
   // Transform data into an array
   const dataArray = [...data].sort((a, b) => a.cost - b.cost);
-
 
   const Cell = ({
     columnIndex,
@@ -228,7 +227,6 @@ const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
       }}
     >
       <Grid
-        
         columnCount={numColumns}
         columnWidth={itemWidth + 20} // Adjust column width to account for margin
         height={numRows * (250 + 20)} // Total height of all rows
