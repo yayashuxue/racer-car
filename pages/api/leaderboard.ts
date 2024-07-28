@@ -22,7 +22,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         tokenId: token,
         collectionId: 3288,
       });
-
       return {
         address: v2Result.owner,
         totalScore: v2Result.attributes.find((a) => a.trait_type === 'Total Score').value,
@@ -32,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     })
   );
 
-  tokens.sort((a, b) => b.totalScore - a.totalScore);
+  tokens.sort((a, b) => b.highScore - a.highScore);
 
   res.status(200).json(tokens);
 }

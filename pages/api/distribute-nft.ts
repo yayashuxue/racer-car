@@ -15,14 +15,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
   const { account, sdk } = await connectSdk();
   const tokensResult = await sdk.token.accountTokens({
-    collectionId: 3288,
+    collectionId: 3385,
     address: address,
   });
   if (tokensResult.tokens.length > 0) {
     const token = tokensResult.tokens[0];
     const v2Result = await sdk.token.getV2({
       tokenId: tokensResult.tokens[0].tokenId,
-      collectionId: 3288,
+      collectionId: 3385,
     });
     res.status(200).json({
       address: v2Result.owner,
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     });
   }
   const token = await sdk.token.createV2({
-    collectionId: 3288,
+    collectionId: 3385,
     image: 'https://gateway.pinata.cloud/ipfs/QmeNzaLfsUUi5pGmhrASEpXF52deCDuByeKbU7SuZ9toEi',
     owner: address, // Use the address from the query parameters as the owner
     attributes: [
@@ -46,6 +46,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       },
       {
         trait_type: 'Car Level',
+        value: 0,
+      },
+      {
+        trait_type: 'Gas Level',
+        value: 0,
+      },
+      {
+        trait_type: 'Wheels Level',
         value: 0,
       },
     ],
