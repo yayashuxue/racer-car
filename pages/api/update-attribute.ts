@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const highScore = token?.attributes?.find((a) => a.trait_type === 'High Score')?.value;
   let { nonce } = await sdk.common.getNonce(account);
   const transactions = [];
-  let usersHighestScore = Math.max(args.score, Number(highScore)));
+  let usersHighestScore = Math.max(args.score, Number(highScore));
   transactions.push(
     sdk.token.setProperties(
       {
@@ -41,11 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           },
           {
             key: 'tokenData',
-            value: changeAttribute(
-              token,
-              'High Score',
-              usersHighestScore
-            ),
+            value: changeAttribute(token, 'High Score', usersHighestScore),
           },
         ],
       },
