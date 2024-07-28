@@ -26,9 +26,9 @@ const Card = ({ userAttributes = POKEMON_ATTRIBUTES, data, isLoading = false }) 
   const AddOn = attributes.AddOn?.toLowerCase();
   const Fuel = attributes.Fuel?.toLowerCase();
   const name = data?.address ? maskAddress(data?.address) : '';
-  const carInfo = findByTypeAndLevel('car', data?.carLevel);
-  const fuelInfo = findByTypeAndLevel('fuel', data?.gasLevel);
-  const equipmentInfo = findByTypeAndLevel('equipment', data?.wheelsLevel);
+  const carInfo = findByTypeAndLevel('car', data?.carLevel ?? 0);
+  const fuelInfo = findByTypeAndLevel('gas', data?.gasLevel);
+  const equipmentInfo = findByTypeAndLevel('wheels', data?.wheelsLevel);
 
   const image = carInfo?.imageUrl ? carInfo.imageUrl : '/racer-car-elements/car-0.png';
 

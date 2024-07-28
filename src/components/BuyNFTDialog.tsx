@@ -110,18 +110,15 @@ export const BuyNFTDialog = ({ setOwner, row, open, handleClose }: Props) => {
       return;
     }
 
-    const response = await fetch(
-      `${apiUrl}/redeem-score?type=${metadata.type}&address=${address}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          gasLevel: 1,
-        }),
-      }
-    );
+    const response = await fetch(`/api/redeem-score?type=${metadata.type}&address=${address}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        gasLevel: 1,
+      }),
+    });
 
     if (response.ok) {
       setOwner(address);
