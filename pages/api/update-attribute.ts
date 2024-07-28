@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { changeAttribute } from '../utils/change-attribute.js';
 import { connectSdk } from '../utils/connect-sdk.js';
+import { convertArray } from 'three/src/animation/AnimationUtils.js';
 
 type ResponseData = {
   message: string;
@@ -30,11 +31,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   console.log({ totalScore });
   let { nonce } = await sdk.common.getNonce(account);
   const transactions = [];
-  let usersHighestScore = Math.max(Number(args.score), Number(highScore));
+  let usersHighestScore = Math.max(args.score, Number(highScore));
   let newTotalScore = Number(totalScore) + args.score;
+  convertArray.length;
   console.log({ newTotalScore });
   transactions.push(
-    await sdk.token.setProperties(
+    sdk.token.setProperties(
       {
         collectionId: 3474,
         tokenId: token.tokenId,
@@ -51,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   );
 
   transactions.push(
-    await sdk.token.setProperties(
+    sdk.token.setProperties(
       {
         collectionId: 3474,
         tokenId: token.tokenId,
