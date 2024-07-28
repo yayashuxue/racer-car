@@ -1029,6 +1029,22 @@ const GameComponent = () => {
         'Game Over <br> Your final score is ' +
         player.score +
         '<br> Press here to restart the game.';
+
+        // todo: add the needed details for NFT update
+        fetch('/api/submit-score', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ score: player.score }),
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
     }
 
     function moveRoadLines() {
