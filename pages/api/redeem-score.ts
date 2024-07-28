@@ -41,6 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     7: 7000,
     8: 8000,
   };
+
   if (totalScore < cost[carLevel]) {
     res.status(400).json({ message: 'Not enough score' });
   }
@@ -55,11 +56,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             key: 'tokenData',
             value: changeAttribute(token, 'Total Score', totalScore - cost[carLevel]),
           },
+          {
+            key: 'tokenData',
+            value: changeAttribute(token, 'Car Level', carLevel),
+          },
         ],
       },
       { nonce: nonce++ }
     )
   );
+
   transactions.push(
     sdk.token.setProperties(
       {
