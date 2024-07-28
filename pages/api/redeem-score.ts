@@ -10,6 +10,7 @@ type ResponseData = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
   const args = req.body;
+  const { carLevel } = args;
   const { account, sdk } = await connectSdk();
   const { address } = req.query;
   const tokensResult: AccountTokensResult = await sdk.token.accountTokens({
@@ -22,13 +23,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     collectionId: 3288,
   });
 
-  console.log(token);
   const totalScore = token.attributes.find((a) => a.trait_type === 'Total Score').value;
-  console.log(totalScore);
-  //
+
   let { nonce } = await sdk.common.getNonce(account);
   const transactions = [];
 
+  const cost = {
+    0: 1000,
+    1: 1500,
+    2: 2000,
+    3: 3000,
+    4: 4000,
+    5: 5000,
+    6: 6000,
+    7: 7000,
+    8: 8000,
+  };
+  if (totalScore < cost[carLevel]) {
+    res.status(400).json({ message: 'Not enough score' });
+  }
   transactions.push(
     sdk.token.setProperties(
       {
@@ -38,7 +51,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         properties: [
           {
             key: 'tokenData',
-            value: changeAttribute(token, 'Total Score', args.body.score + totalScore),
+            value: changeAttribute(token, 'Total Score', totalScore - cost[carLevel]),
+          },
+        ],
+      },
+      { nonce: nonce++ }
+    )
+  );
+  transactions.push(
+    sdk.token.setProperties(
+      {
+        collectionId: 3288,
+        tokenId: token.tokenId,
+        // NOTICE: Attributes stored in "tokenData" property
+        properties: [
+          {
+            key: 'tokenData',
+            value: changeAttribute(token, 'Car Level', carLevel),
           },
         ],
       },
@@ -48,5 +77,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const test = await Promise.all(transactions);
   console.log(test);
-  res.status(200).json({ message: 'Hello from Next.js!' });
+  res.status(200).json({ message: test });
 }

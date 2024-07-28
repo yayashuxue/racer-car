@@ -17,7 +17,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(400).json({ message: 'Address is required' });
   }
   const { account, sdk } = await connectSdk();
-  console.log(account);
+  const tokensResult: AccountTokensResult = await sdk.token.accountTokens({
+    collectionId: 3288,
+    address: address,
+  });
+  if (tokensResult.tokens.length > 0) {
+    const token = tokensResult.tokens[0];
+    const usersToken = await sdk.token.properties(token);
+    res.status(200).json(usersToken);
+  }
   const token = await sdk.token.createV2({
     collectionId: 3288,
     image: 'https://gateway.pinata.cloud/ipfs/QmeNzaLfsUUi5pGmhrASEpXF52deCDuByeKbU7SuZ9toEi',
@@ -37,9 +45,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       },
     ],
   });
-
+  console.log(token);
   if (token.error) {
     res.status(401).json({ message: token.error.message });
   }
-  res.status(200).json({ message: 'yo' });
+  res.status(200).json({ data: token });
 }
