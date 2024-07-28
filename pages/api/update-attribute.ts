@@ -23,13 +23,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     collectionId: 3288,
   });
 
-  console.log(token);
   const totalScore = token?.attributes?.find((a) => a.trait_type === 'Total Score')?.value;
-  console.log(totalScore);
-  //
+  const highScore = token?.attributes?.find((a) => a.trait_type === 'High Score')?.value;
   let { nonce } = await sdk.common.getNonce(account);
   const transactions = [];
-
+  let usersHighestScore = Math.max(args.score, Number(highScore)));
   transactions.push(
     sdk.token.setProperties(
       {
@@ -39,7 +37,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         properties: [
           {
             key: 'tokenData',
-            value: changeAttribute(token, 'Total Score', args.score + totalScore),
+            value: changeAttribute(token, 'Total Score', Number(args.score) + Number(totalScore)),
+          },
+          {
+            key: 'tokenData',
+            value: changeAttribute(
+              token,
+              'High Score',
+              usersHighestScore
+            ),
           },
         ],
       },
