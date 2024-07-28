@@ -4,21 +4,21 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { CloseDialogButton } from 'src/components/CloseDialogButton';
-import {OPERATOR_ADDRESS, POKER_ABI, POKER_ADDRESS} from 'src/constants';
-import { useMintNFT } from 'src/hook/useMintNFT'; 
+import { OPERATOR_ADDRESS, POKER_ABI, POKER_ADDRESS } from 'src/constants';
+import { useMintNFT } from 'src/hook/useMintNFT';
 import { opal } from '../../config';
-import {useWatchContractEvent} from 'wagmi';
+import { useWatchContractEvent } from 'wagmi';
 import * as z from 'zod';
-import {apiUrl, config} from '../../config';
-import {set} from 'lodash';
+import { apiUrl, config } from '../../config';
+import { set } from 'lodash';
 import { readContract, writeContract } from '@wagmi/core';
 import AnimatedCard from './AnimatedCard';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { useSnackBar } from 'src/hook/useSnackBar';
-import {ethers} from 'ethers';
+import { ethers } from 'ethers';
 
 export async function getTokenId() {
   const result = await readContract(config, {
@@ -61,7 +61,6 @@ type MetadataType = {
   rarity: number;
 };
 
-
 export const BuyNFTDialog = ({ setOwner, row, open, handleClose }: Props) => {
   const theme = useTheme();
   const { wallets } = useWallets();
@@ -82,15 +81,16 @@ export const BuyNFTDialog = ({ setOwner, row, open, handleClose }: Props) => {
   const [tokenId, setTokenId] = useState(-1);
   const [price, setPrice] = useState(-1);
   const [approvalSubmitted, setApprovalSubmitted] = useState(false);
-  const {showSuccess, showError} = useSnackBar();
+  const { showSuccess, showError } = useSnackBar();
 
   useEffect(() => {
-    if(row){
+    if (row) {
       setMetadata({
         cost: row?.cost,
         name: row?.name,
         specialEffects: row?.specialEffects,
         imageUrl: row?.imageUrl,
+        type: row?.type,
       });
       setTokenId(Number(row?.id));
       setIsListingSuccessful(row?.forSale);
@@ -99,10 +99,10 @@ export const BuyNFTDialog = ({ setOwner, row, open, handleClose }: Props) => {
 
     console.log('row data', row);
   }, [row]);
-  
-useEffect(() => {
-  console.log('Metadata:', metadata);
-}, [metadata]);
+
+  useEffect(() => {
+    console.log('Metadata:', metadata);
+  }, [metadata]);
 
   const handlePurchase = async () => {
     if (tokenId === -1) {
@@ -110,28 +110,29 @@ useEffect(() => {
       return;
     }
 
-    const response = await fetch(`${apiUrl}/buyNFT`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        addressBuyer: address,
-        tokenId: tokenId,
-      }),
-    });
+    const response = await fetch(
+      `${apiUrl}/redeem-score?type=${metadata.type}&address=${address}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          gasLevel: 1,
+        }),
+      }
+    );
 
     if (response.ok) {
       setOwner(address);
       setIsPurchaseSuccessful(true);
       // Show success message
-      showSuccess('NFT listed purhcased successfully at $' + price );
+      showSuccess('NFT listed purhcased successfully at $' + price);
     } else {
       // Show error message
       showError('Error: ' + response.status + ' ' + response.statusText);
     }
   };
-
 
   const close = () => {
     setTokenId(-1);
@@ -150,9 +151,7 @@ useEffect(() => {
             <div>
               <Typography fontSize={20}> {metadata.name}</Typography>
               <Typography> {metadata.specialEffects}</Typography>
-              <Typography>
-                Cost: ${metadata.cost} 
-              </Typography>
+              <Typography>Cost: ${metadata.cost}</Typography>
               <img
                 src={metadata?.imageUrl}
                 alt='card'
