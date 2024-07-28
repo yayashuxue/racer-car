@@ -73,44 +73,44 @@ export const CustomConnectButton = () => {
       }
     };
 
-    const connectWallet = async () => {
-      if (ready && authenticated && user?.wallet) {
-        const json = {
-          address: user?.wallet?.address,
-          x_account: user?.twitter?.username,
-          referrerAddress: null,
-        };
-        console.log('connectWallet User:', user);
-        try {
-          let response = await fetch(`${apiUrl}/isNewUser/${user.wallet.address}`);
-          const data = await response.json();
+    // const connectWallet = async () => {
+    //   if (ready && authenticated && user?.wallet) {
+    //     const json = {
+    //       address: user?.wallet?.address,
+    //       x_account: user?.twitter?.username,
+    //       referrerAddress: null,
+    //     };
+    //     console.log('connectWallet User:', user);
+    //     try {
+    //       let response = await fetch(`${apiUrl}/isNewUser/${user.wallet.address}`);
+    //       const data = await response.json();
 
-          // If user is new, open referral dialog
-          if (data.isNewUser) {
-            // Add user if they are new
-            response = await fetch(`${apiUrl}/createUser`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(json),
-            });
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      }
-    };
+    //       // If user is new, open referral dialog
+    //       if (data.isNewUser) {
+    //         // Add user if they are new
+    //         response = await fetch(`${apiUrl}/createUser`, {
+    //           method: 'POST',
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //           },
+    //           body: JSON.stringify(json),
+    //         });
+    //         if (!response.ok) {
+    //           throw new Error('Network response was not ok');
+    //         }
+    //       }
+    //     } catch (error) {
+    //       console.error('Error:', error);
+    //     }
+    //   }
+    // };
 
     if (ready && authenticated) {
       fetchBalance();
       if (wallets && wallets[0] && Number(wallets[0].chainId) !== opal.id) {
         wallets[0].switchChain(opal.id);
       }
-      connectWallet();
+      // connectWallet();
     }
   }, [ready, authenticated, wallets, user]);
 

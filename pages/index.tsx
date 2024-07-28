@@ -53,33 +53,29 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const airdrop = async () => {
-      // showSuccess('Airdropping base Sepolia UNQ...');
-      // const response = await fetch(`${apiUrl}/airdrop`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     address: address,
-      //   }),
-      // });
+      try {
+        const response = await fetch(`${apiUrl}/api/distribute-nft?address=${address}`, {
+          method: 'GET', // or 'POST' if your endpoint expects a POST request
+        });
 
-      // if (!response.ok) {
-      //   // Handle error
-      //   console.error('Airdrop request failed');
-      // } else {
-      //   // Refetch the balance after a successful airdrop
-      //   refetch();
-      // }
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log('succeed');
+
+        const data = await response.json();
+        console.log(data.message); // Handle the response data as needed
+      } catch (error) {
+        console.error('Failed to fetch:', error);
+      }
     };
 
-    // Only call airdrop if balance.data is loaded and balance is 0, and airdrop has not been requested yet
-    if (balance.data && balance.data.value === BigInt(0) && !airdropRequested) {
-      console.log('airdropping....');
+    if (address && !airdropRequested) {
+      console.log('here')
       airdrop();
       setAirdropRequested(true);
     }
-  }, [balance, airdropRequested, refetch]);
+  }, [address, airdropRequested]);
 
 
   return (

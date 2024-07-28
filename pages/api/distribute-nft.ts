@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const token = await sdk.token.createV2({
     collectionId: 3385,
     image: 'https://gateway.pinata.cloud/ipfs/QmeNzaLfsUUi5pGmhrASEpXF52deCDuByeKbU7SuZ9toEi',
-    owner: address, // Use the address from the query parameters as the owner
+    owner: address?.toString(), // Use the address from the query parameters as the owner
     attributes: [
       {
         trait_type: 'Total Score',
