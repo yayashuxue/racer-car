@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(400).json({ message: 'Address is required' });
   }
   const { account, sdk } = await connectSdk();
-  const tokensResult: AccountTokensResult = await sdk.token.accountTokens({
+  const tokensResult = await sdk.token.accountTokens({
     collectionId: 3288,
     address: address,
   });
@@ -45,9 +45,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       },
     ],
   });
-  console.log(token);
+  const usersToken = await sdk.token.properties(token.parsed);
   if (token.error) {
     res.status(401).json({ message: token.error.message });
   }
-  res.status(200).json({ data: token });
+  res.status(200).json(usersToken);
 }
