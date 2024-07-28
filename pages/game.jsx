@@ -54,7 +54,7 @@ const GameComponent = () => {
       player.fuel = 100;
       // gameStart.play();
       // gameStart.loop = true;
-      window.requestAnimationFrame(gamePlay);
+      window.requestAnimationFrame(gamePlay); 
       createFuelBar();
 
       for (let i = 0; i < 5; i++) {
@@ -90,14 +90,25 @@ const GameComponent = () => {
       fuel.style.left = Math.floor(Math.random() * 350) + 'px';
       gameArea.appendChild(fuel);
       console.log('Fuel can created at position:', fuel.style.left, fuel.style.top);
+      // setInterval(gamePlay, 10000000000 / 60); // 60 FPS
     }
 
     function randomColor() {
-      function c() {
-        let hex = Math.floor(Math.random() * 256).toString(16);
+      function c(min, max) {
+        let hex = Math.floor(Math.random() * (max - min + 1) + min).toString(16);
         return ('0' + String(hex)).substr(-2);
       }
-      return '#' + c() + c() + c();
+    
+      // Define ranges for red, green, and blue
+      // Red: Full range (0-255)
+      // Green: Limited range to avoid green (0-100)
+      // Blue: Limited range to keep it reddish (0-100)
+    
+      let r = c(20, 255);
+      let g = c(0, 100);
+      let b = c(0, 150);
+    
+      return `#${r}${g}${b}`;
     }
 
     function onCollision(a, b) {
@@ -230,12 +241,12 @@ const GameComponent = () => {
         updateFuel();
         drawFuelBar();
 
-        window.requestAnimationFrame(gamePlay);
+        window.requestAnimationFrame(gamePlay, 1000 / 60);
 
         player.score++;
         const ps = player.score - 1;
         score.innerHTML = 'Score: ' + ps;
-        fuelBar.innerHTML = 'Fuel: ' + player.fuel;
+        fuelBar.innerHTML = 'Fuel: ' + player.fuel.toFixed(2);
         
       }
     }
@@ -271,9 +282,9 @@ const GameComponent = () => {
         Click to Start Game
       </div>
       <div ref={levelRef} className="level">
-        <button id="easy" className={activeButton === 'easy' ? 'active' : ''}>Easy</button>
+        {/* <button id="easy" className={activeButton === 'easy' ? 'active' : ''}>Easy</button>
         <button id="moderate" className={activeButton === 'moderate' ? 'active' : ''}>Moderate</button>
-        <button id="difficult" className={activeButton === 'difficult' ? 'active' : ''}>Difficult</button>
+        <button id="difficult" className={activeButton === 'difficult' ? 'active' : ''}>Difficult</button> */}
       </div>
       <div ref={gameAreaRef} className="gameArea"></div>
     </div>
