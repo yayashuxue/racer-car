@@ -1,15 +1,26 @@
 // config.ts
 // import { Chain, getDefaultConfig } from '@rainbow-me/rainbowkit';
+
 import { Chain } from 'viem';
-import { http} from 'wagmi';
+import { http } from 'wagmi';
 import { createConfig } from '@privy-io/wagmi';
 import { addRpcUrlOverrideToChain } from '@privy-io/react-auth';
-import { baseSepolia } from 'viem/chains';
 
+export const opal: Chain = {
+  id: 8882,
+  name: 'Opal testnet',
+  nativeCurrency: { name: 'UNQ', symbol: 'UNQ', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://explorer.opal.unique.network/'] },
+  },
+  // blockExplorers: {
+  //   default: { name: 'inco', url: 'https://explorer.testnet.inco.org/' }
+  // }
+};
 export const config = createConfig({
-  chains: [baseSepolia],
+  chains: [opal],
   transports: {
-    [baseSepolia.id]: http(),
+    [opal.id]: http(),
   },
 });
 
