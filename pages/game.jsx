@@ -1060,6 +1060,9 @@ const GameComponent = () => {
     function moveFuel(carElement) {
       let fuelCan = document.querySelectorAll('.fuelCan');
       fuelCan.forEach((item) => {
+        if (onCollision(carElement, item)) {
+          collectFuel();
+        }
         if (item.y >= 750) {
           item.y = -300;
           item.style.left = Math.floor(Math.random() * 350) + 'px';
@@ -1149,7 +1152,7 @@ const GameComponent = () => {
     }
 
     function collectFuel() {
-      player.fuel = Math.min(player.fuel + 20, 100);
+      player.fuel = Math.min(player.fuel + 0.25, 100);
     }
 
     function updateFuel() {
@@ -1179,7 +1182,7 @@ const GameComponent = () => {
         moveRoadLines();
         moveEnemyCars(carElement);
         console.log('fuel element:', fuelElement);
-        moveFuel(fuelElement);
+        moveFuel(carElement);
         // movetimeslower(timeSlower);
         // moveItems(carElement);
 
@@ -1188,10 +1191,10 @@ const GameComponent = () => {
           //   // console.log("happening");
           //   createItem();
           // }
-          player.y -= player.speed};
-        if (keys.ArrowDown && player.y < road.bottom - 85) player.y += player.speed;
+          player.y -= (player.speed+1)};
+        if (keys.ArrowDown && player.y < road.bottom - 85) player.y += (player.speed+1);
         if (keys.ArrowLeft && player.x > 0) player.x -= player.speed;
-        if (keys.ArrowRight && player.x < road.width - 70) player.x += player.speed;
+        if (keys.ArrowRight && player.x < road.width - 70) player.x += (player.speed+1);
         console.log('player x:', player.x, 'player y:', player.y);
         carElement.style.top = player.y + 'px';
         carElement.style.left = player.x + 'px';
