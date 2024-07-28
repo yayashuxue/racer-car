@@ -13,31 +13,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (!address) {
     res.status(400).json({ message: 'Address is required' });
   }
+  console.log(address);
   const tokensResult = await sdk.token.accountTokens({
-    collectionId: 3288,
-    address: address as string,
+    collectionId: 3429,
+    address: address,
   });
 
   const token = await sdk.token.getV2({
     tokenId: tokensResult.tokens[0]?.tokenId,
-    collectionId: 3288,
+    collectionId: 3429,
   });
 
   const totalScore = token?.attributes?.find((a) => a.trait_type === 'Total Score')?.value;
+  console.log(token?.attributes);
   const highScore = token?.attributes?.find((a) => a.trait_type === 'High Score')?.value;
+  console.log({ totalScore });
   let { nonce } = await sdk.common.getNonce(account);
   const transactions = [];
   let usersHighestScore = Math.max(args.score, Number(highScore));
+  let newTotalScore = Number(totalScore) + args.score;
+  console.log({ newTotalScore });
   transactions.push(
-    sdk.token.setProperties(
+    await sdk.token.setProperties(
       {
-        collectionId: 3288,
+        collectionId: 3429,
         tokenId: token.tokenId,
         // NOTICE: Attributes stored in "tokenData" property
         properties: [
           {
             key: 'tokenData',
-            value: changeAttribute(token, 'Total Score', Number(args.score) + Number(totalScore)),
+            value: changeAttribute(token, 'Total Score', newTotalScore),
           },
           {
             key: 'tokenData',
@@ -50,6 +55,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   );
 
   const test = await Promise.all(transactions);
-
+  console.log(test);
   res.status(200).json({ message: 'success' });
 }

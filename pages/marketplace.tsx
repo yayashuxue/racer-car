@@ -64,7 +64,6 @@ const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
   // Transform data into an array
   const dataArray = [...data].sort((a, b) => a.cost - b.cost);
 
-
   const Cell = ({
     columnIndex,
     rowIndex,
@@ -141,7 +140,6 @@ const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
       }}
     >
       <Grid
-        
         columnCount={numColumns}
         columnWidth={itemWidth + 20} // Adjust column width to account for margin
         height={numRows * (250 + 20)} // Total height of all rows

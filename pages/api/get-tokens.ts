@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
   const { account, sdk } = await connectSdk();
   const tokensResult = await sdk.token.accountTokens({
-    collectionId: 3288,
+    collectionId: 3385,
     address: address,
   });
   const token = tokensResult.tokens[0];
