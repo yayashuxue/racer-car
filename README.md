@@ -18,6 +18,10 @@ Check out our project presentation slides:
 )
 
 ## 🎮 Live Gameplay and Code Walkthrough
+[Watch a live E2E demo here! 
+](https://www.loom.com/share/d501fb019960462cbbb21c36238aae70?sid=491a2b27-069e-486e-ab66-5794bf278d24
+)
+
 [Watch a live gameplay session and explore the code base in detail:
 Live Gameplay and Code Walkthrough
 ](https://github.com/user-attachments/assets/63701937-480f-4127-b0f7-e3528b670dc0
