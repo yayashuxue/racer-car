@@ -1,3 +1,9 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +15,18 @@
 .carGame {
   width: 100%;
   height: 100vh;
-  background-image: url('/assets/images/bg.jpg');
+  background-image: url('/assets/images/indiebg.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.fuelCan {
+  width: 50px;
+  height: 70px;
+  background: rgba(24, 255, 43, 0.526);
+  position: absolute;
+  bottom: 120px;
+  background-image: url('/assets/images/fuel.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -64,70 +81,91 @@
   font-size: 1.5em;
   box-shadow: 0 5px 5px #777;
 }
+
+
 .startScreen {
   position: absolute;
-  background-color: #ee5253;
+  background: linear-gradient(45deg, #ff0606, #ff7070); /* Modern gradient background */
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   color: white;
   z-index: 1;
   text-align: center;
-  border: 1px solid #ff6b6b;
-  padding: 15px;
+  border: none; /* Remove the border */
+  border-radius: 25px; /* Rounded corners */
+  padding: 20px 40px; /* Increase padding for a bigger look */
   margin: auto;
-  width: 50%;
+  width: 40%; /* Adjust width to make it less wide */
   cursor: pointer;
-  letter-spacing: 5;
-  font-size: 20px;
-  word-spacing: 3;
-  line-height: 30px;
+  letter-spacing: 2px; /* Slightly reduce letter spacing */
+  font-size: 22px; /* Slightly increase font size */
+  word-spacing: 3px; /* Keep word spacing the same */
+  line-height: 1.6; /* Adjust line height for better readability */
   text-transform: uppercase;
-  box-shadow: 0 5px 5px #777;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Softer and larger shadow */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
+
+.startScreen:hover {
+  background: linear-gradient(45deg, #ff0606, #ff7070); /* Reverse the gradient on hover */
+  box-shadow: 0 15px 30px rgba(255, 41, 41, 0.3); /* Stronger shadow on hover */
+  transform: translate(-50%, -50%) scale(1.05); /* Slightly scale up on hover */
+}
+
+.startScreen:active {
+  background: linear-gradient(45deg, #ff0606, #ff7070); /* Keep the same gradient as default */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Softer shadow on active */
+  transform: translate(-50%, -50%) scale(1); /* No scale effect on active */
+}
+
 .level button {
+  padding: 25px 35px; /* Increase padding for a bigger button */
+  font-size: 20px; /* Increase font size */
+
   padding: 7px;
   font-size: 14px;
-  background: white;
+  background: linear-gradient(45deg, #ffffff, #ffa0a8); /* Modern gradient background */
   border: 1px solid orangered;
   border-radius: 10px;
   width: 80px;
   cursor: pointer;
   outline: none;
-  box-shadow: 0 5px 5px #777777a6;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: all 0.3s ease; /* Smooth transitions */
 }
 
 .level {
   position: absolute;
   top: 500px; /* Adjust this value to move the buttons lower */
   left: 20%;
+  display: flex; /* Use Flexbox */
+  justify-content: center; /* Center items horizontally */
   transform: translateX(-50%);
   text-align: center;
+  gap: 20px; /* Space out the buttons */
+
 }
 
 .level button:hover {
-  background: orangered; /* Change to desired color */
-  color: white; /* Optionally change text color */
-  border-color: darkred; /* Optionally change border color */
+  background: linear-gradient(45deg, #ff4757, #ff6b6b); /* Reverse the gradient on hover */
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  transform: translateY(-3px); /* Slight lift on hover */
 }
 /* Change button color when pressed */
 .level button:active {
-  background: orangered; /* Change to desired color */
-  color: white; /* Optionally change text color */
-  border-color: darkred; /* Optionally change border color */
+  background: linear-gradient(45deg, #6a0078, #ff00f2); /* Keep the same gradient as default */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Softer shadow on active */
+  transform: translateY(0); /* No lift on active */
 }
+
+.level button.active {
+  background: linear-gradient(45deg, #ff0000, #ac0000); /* Keep the same gradient as default */
+  color: rgb(255, 255, 255); /* Adjust text color for better visibility */
+  transform: translateY(0); /* No lift on active */
+}
+
 
 .timeSlower {
   background-image: url('/assets/images/clock.png');
-}
-
-.fuelCan {
-  background-image: url('/assets/images/fuel.png');
-  width: 50px;
-  height: 70px;
-  background: rgba(0, 180, 12, 0.497);
-  position: absolute;
-  bottom: 120px;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
