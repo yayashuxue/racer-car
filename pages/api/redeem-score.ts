@@ -16,12 +16,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(400).json({ message: 'Address is required' });
   }
   const tokensResult: AccountTokensResult = await sdk.token.accountTokens({
-    collectionId: 3288,
+    collectionId: 3429,
     address: address as string,
   });
   const token = await sdk.token.getV2({
     tokenId: tokensResult.tokens[0].tokenId,
-    collectionId: 3288,
+    collectionId: 3429,
   });
   const totalScore = Number(token?.attributes?.find((a) => a.trait_type === 'Total Score')?.value);
 
@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     transactions.push(
       sdk.token.setProperties(
         {
-          collectionId: 3288,
+          collectionId: 3429,
           tokenId: token.tokenId,
           // NOTICE: Attributes stored in "tokenData" property
           properties: [
@@ -83,7 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     transactions.push(
       sdk.token.setProperties(
         {
-          collectionId: 3288,
+          collectionId: 3429,
           tokenId: token.tokenId,
           // NOTICE: Attributes stored in "tokenData" property
           properties: [
