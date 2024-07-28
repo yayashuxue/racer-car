@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState  } from 'react';
+import { usePrivy } from '@privy-io/react-auth';
 
 const GameComponent = () => {
   const gameAreaRef = useRef(null);
@@ -7,6 +8,10 @@ const GameComponent = () => {
   const startScreenRef = useRef(null);
   const levelRef = useRef(null);
   const [activeButton, setActiveButton] = useState(null);
+  const { user } = usePrivy();
+  const address = user?.wallet?.address;
+
+  console.log('User:', user);
 
   useEffect(() => {
     const score = scoreRef.current;
@@ -133,8 +138,11 @@ const GameComponent = () => {
         player.score +
         '<br> Press here to restart the game.';
 
+        console.log("address:", address);
+        
         // todo: add the needed details for NFT update
-        fetch('/api/submit-score', {
+        // fetch(`/api/update-attribute?address=5GKV7gDVaREAbr4rYkuYTuJV2mZsyhqGYvSaFm8xf5BaDKbq`, {
+        fetch(`/api/update-attribute?address=${address}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

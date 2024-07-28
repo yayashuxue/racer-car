@@ -22,7 +22,7 @@ import Image from 'next/image';
 
 import { useRouter } from 'next/router';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import {maskAddress} from 'src/utils/maskAddress';
+import { maskAddress } from 'src/utils/maskAddress';
 type LobbyTableProps = {
   data: TableData[];
 };
@@ -73,7 +73,7 @@ export const LeaderboardTable: React.FC<LeaderboardTableProps> = ({ data }) => {
           <TableRow>
             <TableCell>#</TableCell>
             <TableCell>Profile</TableCell>
-            <TableCell>Points ⛽️</TableCell>
+            <TableCell>HighScore ⛽️</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -85,10 +85,8 @@ export const LeaderboardTable: React.FC<LeaderboardTableProps> = ({ data }) => {
                 onClick={() => router.push(`/profile?address=${row.address}`)}
               >
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>
-                  {row.twitter ? `@${row.twitter}` : maskAddress(row.address)}
-                </TableCell>
-                <TableCell>{row.balance}</TableCell>
+                <TableCell>{row.twitter ? `@${row.twitter}` : maskAddress(row.address)}</TableCell>
+                <TableCell>{row.points}</TableCell>
               </TableRow>
             );
           })}
@@ -99,8 +97,8 @@ export const LeaderboardTable: React.FC<LeaderboardTableProps> = ({ data }) => {
 };
 
 export const LobbyTable: React.FC<LobbyTableProps> = ({ data }) => {
-    const theme = useTheme();
-    const isLightTheme = theme.palette.mode === 'light';
+  const theme = useTheme();
+  const isLightTheme = theme.palette.mode === 'light';
 
   const columns: Column[] = [
     {
@@ -147,7 +145,7 @@ export const LobbyTable: React.FC<LobbyTableProps> = ({ data }) => {
             {row.minBuyin}/{row.maxBuyin}
           </span>
           {'   '}
-           ⛽️
+          ⛽️
         </div>
       ),
       align: 'right',
