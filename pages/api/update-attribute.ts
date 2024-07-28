@@ -15,13 +15,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
   console.log(address);
   const tokensResult = await sdk.token.accountTokens({
-    collectionId: 3429,
+    collectionId: 3474,
     address: address,
   });
 
   const token = await sdk.token.getV2({
     tokenId: tokensResult.tokens[0]?.tokenId,
-    collectionId: 3429,
+    collectionId: 3474,
   });
 
   const totalScore = token?.attributes?.find((a) => a.trait_type === 'Total Score')?.value;
@@ -30,13 +30,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   console.log({ totalScore });
   let { nonce } = await sdk.common.getNonce(account);
   const transactions = [];
-  let usersHighestScore = Math.max(args.score, Number(highScore));
+  let usersHighestScore = Math.max(Number(args.score), Number(highScore));
   let newTotalScore = Number(totalScore) + args.score;
   console.log({ newTotalScore });
   transactions.push(
-    sdk.token.setProperties(
+    await sdk.token.setProperties(
       {
-        collectionId: 3429,
+        collectionId: 3474,
         tokenId: token.tokenId,
         // NOTICE: Attributes stored in "tokenData" property
         properties: [
@@ -51,9 +51,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   );
 
   transactions.push(
-    sdk.token.setProperties(
+    await sdk.token.setProperties(
       {
-        collectionId: 3429,
+        collectionId: 3474,
         tokenId: token.tokenId,
         // NOTICE: Attributes stored in "tokenData" property
         properties: [
