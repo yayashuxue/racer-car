@@ -1,8 +1,4 @@
-import {
-  Box,
-  Button,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -16,20 +12,8 @@ import { FixedSizeGrid as Grid } from 'react-window';
 import { baseSepolia } from 'viem/chains';
 import { apiUrl } from 'config';
 import { useSnackBar } from 'src/hook/useSnackBar';
-
-const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => {
-  const rarityValue = parseInt(rarity, 10);
-  if (rarityValue <= 50) {
-    return 'Common';
-  } else if (rarityValue <= 80) {
-    return 'Rare';
-  } else if (rarityValue <= 95) {
-    return 'Epic';
-  } else {
-    return 'Legendary';
-  }
-};
-
+import Card from 'src/components/TradingCard/Card';
+import { POKEMON_ATTRIBUTES } from 'src/components/TradingCard/data';
 
 export interface NFTTableData {
   tokenId: string;
@@ -63,91 +47,7 @@ export const updateUser = async (address: string, x_account: string | null) => {
   }
 };
 
-const NFTTableData: React.FC<NFTTableProps> = ({ data, setListNFTOpen, setOpenedNFTMetadata }) => {
-  // Transform data into an array
-  const dataArray = Object.entries(data)
-    .map(([id, info]: [string, any]) => ({
-      id,
-      ...info,
-    }))
-    .sort((a, b) => Number(b.rarity) - Number(a.rarity)); // for descending order
-
-  const Cell = ({
-    columnIndex,
-    rowIndex,
-    style,
-  }: {
-    columnIndex: number;
-    rowIndex: number;
-    style: React.CSSProperties;
-  }) => {
-    const row = dataArray[rowIndex * numColumns + columnIndex];
-    if (!row) {
-      return null; // Return null for cells that don't have corresponding data
-    }
-    return (
-      <Box
-        style={style}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          // border: '1.5px solid',
-          // borderRadius: 1,
-        }}
-        onClick={() => {
-          setOpenedNFTMetadata(row);
-          setListNFTOpen(true);
-        }}
-      >
-        <StaticCard
-          columnWidth={140}
-          rowHeight={194}
-          cardNumber={row.cardNumber}
-          rarity={mapRarity(row.rarity)}
-        ></StaticCard>
-        <Typography color='textPrimary'>Rarity: {row.rarity}</Typography>
-      </Box>
-    );
-  };
-
-  const [windowDimensions, setWindowDimensions] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 0,
-    height: typeof window !== 'undefined' ? window.innerHeight : 0,
-  });
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const itemWidth = 150; // Adjust based on the size of your cards
-  const width = Math.min(windowDimensions.width * 0.9, 479); // 90% of the window width
-  const numColumns = Math.floor(width / itemWidth);
-  const numRows = Math.ceil(dataArray.length / numColumns);
-
-  return (
-    <Grid
-      columnCount={numColumns}
-      columnWidth={150} // Adjust based on the size of your cards
-      height={windowDimensions.height * 0.6}
-      rowCount={numRows}
-      rowHeight={250} // Adjust based on the size of your cards
-      width={width}
-    >
-      {Cell}
-    </Grid>
-  );
-};
-
+//
 const Home: NextPage = () => {
   const router = useRouter();
   const { login, ready, authenticated, logout, user, unlinkTwitter, linkTwitter } = usePrivy();
@@ -172,6 +72,20 @@ const Home: NextPage = () => {
       login();
     }
   }, [address]);
+  const [attributes, setAttributes] = useState(POKEMON_ATTRIBUTES);
+
+  const updateAttributes = () => {
+    setAttributes({
+      ...attributes,
+      name: 'gmgm',
+      effect: {
+        ...attributes.effect,
+        name: 'Updated Floral Strike',
+      },
+      level: 123,
+      // Add more updates as needed
+    });
+  };
 
   useEffect(() => {
     const updateUserIfTwitterExists = async () => {
@@ -363,8 +277,8 @@ const Home: NextPage = () => {
                 🚗
               </Box>
             </Typography>
-
-            <Box mt={2}>
+            <Card image={'/racer-car-elements/car-0.png'} />
+            {/* <Box mt={2}>
               {Object.keys(data).length === 0 ? (
                 <>
                   <AnimatedCard cardNumber={-1} rarity={'Rare'} />
@@ -379,7 +293,7 @@ const Home: NextPage = () => {
                   setOpenedNFTMetadata={setOpenedNFTMetadata}
                 />
               )}
-            </Box>
+            </Box> */}
             <Box
               display='flex'
               flexDirection='column'

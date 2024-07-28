@@ -141,18 +141,18 @@ useEffect(() => {
       <CloseDialogButton handleClose={close} />
       <DialogContent>
         <Box p={{ xs: 2, md: 4, textAlign: 'center' }} pb={{ xs: 2, md: 1 }}>
-          <Typography fontSize={20}>Purchase Poker</Typography>
+          <Typography fontSize={20}>Purchase Equipment</Typography>
           {metadata && (
             <div>
               <Typography>Card Number: {metadata.cardNumber}</Typography>
               <Typography>
                 Rarity Score: {metadata.rarity} {mapRarity(metadata?.rarity?.toString())}
               </Typography>
-              <AnimatedCard
+              {/* <AnimatedCard
                 key={metadata.cardNumber}
                 rarity={mapRarity(metadata?.rarity?.toString())}
                 cardNumber={metadata.cardNumber}
-              />
+              /> */}
             </div>
           )}
 

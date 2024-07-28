@@ -106,7 +106,7 @@ const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
           cardNumber={row.cardNumber}
           rarity={mapRarity(row.rarity)}
         ></StaticCard>
-        <Typography color='textPrimary'>Rarity: {row.rarity}</Typography>
+        {/* <Typography color='textPrimary'>Rarity: {row.rarity}</Typography> */}
         <Typography color='textPrimary'>Price: {row.amount}</Typography>
       </Box>
     );

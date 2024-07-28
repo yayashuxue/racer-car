@@ -33,7 +33,7 @@ const StaticCard: React.FC<StaticCardProps> = ({
 
       // Load texture
       const frontTexture = new THREE.TextureLoader().load(
-        cardNumber == -1 ? '/cards/spade.png' : `/poker-cards/poker-${cardNumber}.png`
+        cardNumber == -1 ? '/racer-car-elements/car-0.png' : `/racer-car-elements/car-${cardNumber}.png`
       );
 
       // Card geometry and material
@@ -54,23 +54,23 @@ const StaticCard: React.FC<StaticCardProps> = ({
         Legendary: 0xff00ff,
       }[rarity];
 
-      const glowGeometry = new THREE.PlaneGeometry(columnWidth * 0.95, rowHeight * 0.95); // Slightly larger than the card
-      const glowMaterial = new THREE.MeshBasicMaterial({
-        color: glowColor, // Glory blue color
-        side: THREE.DoubleSide, // Render both sides of the geometry
-        transparent: true,
-        opacity: 0.5, // Adjust the opacity for the glow effect
-        blending: THREE.AdditiveBlending, // Use additive blending for a glowing effect
-        depthWrite: false, // Disable depth writing to avoid z-fighting
-      });
+      // const glowGeometry = new THREE.PlaneGeometry(columnWidth * 0.95, rowHeight * 0.95); // Slightly larger than the card
+      // const glowMaterial = new THREE.MeshBasicMaterial({
+      //   // color: glowColor, // Glory blue color
+      //   side: THREE.DoubleSide, // Render both sides of the geometry
+      //   transparent: true,
+      //   opacity: 0.5, // Adjust the opacity for the glow effect
+      //   blending: THREE.AdditiveBlending, // Use additive blending for a glowing effect
+      //   depthWrite: false, // Disable depth writing to avoid z-fighting
+      // });
 
-      // Create glow mesh
-      const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-      glow.renderOrder = -1; // Render the glow before the card
+      // // Create glow mesh
+      // const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+      // glow.renderOrder = -1; // Render the glow before the card
 
       // Group the front of the card and the glow
       group = new THREE.Group();
-      group.add(glow); // Add the glow mesh first
+      // group.add(glow); // Add the glow mesh first
       group.add(cardFront);
       scene.add(group);
 
@@ -108,7 +108,7 @@ const StaticCard: React.FC<StaticCardProps> = ({
     };
   }, []); // Empty dependency array to run the effect only once
 
-  return <div ref={canvasRef} style={{ display: 'flex', justifyContent: 'center' }} />;
+  return <div ref={canvasRef} style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'transparent'}} />;
 };
 
 export default StaticCard;
