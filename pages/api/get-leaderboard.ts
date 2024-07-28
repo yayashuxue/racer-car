@@ -24,15 +24,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     owner: address, // Use the address from the query parameters as the owner
     attributes: [
       {
-        trait_type: 'Total Score',
+        trait_type: 'Nickname',
+        value: 'nickname',
+      },
+      {
+        trait_type: 'Victories',
         value: 0,
       },
       {
-        trait_type: 'High Score',
-        value: 0,
-      },
-      {
-        trait_type: 'Car Level',
+        trait_type: 'Defeats',
         value: 0,
       },
     ],

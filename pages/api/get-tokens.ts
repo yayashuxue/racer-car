@@ -13,17 +13,20 @@ type ResponseData = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+  const { address } = req.query;
+  if (!address || typeof address !== 'string') {
+    res.status(400).json({ message: 'Address is required' });
+  }
   const { account, sdk } = await connectSdk();
-
-  const tokensResult: AccountTokensResult = await sdk.collection.tokens({
+  const tokensResult: AccountTokensResult = await sdk.token.accountTokens({
     collectionId: 3288,
+    address: address,
   });
-
-  const tokens = await Promise.all(
-    tokensResult.ids.map(async (token) => {
-      return await sdk.token.get({ tokenId: token, collectionId: 3268 });
-    })
-  );
-
-  res.status(200).json(tokens);
+  const token = tokensResult.tokens[0];
+  const usersToken = await sdk.token.properties(token);
+  console.log(usersToken);
+  if (token.error) {
+    res.status(401).json({ message: token.error.message });
+  }
+  res.status(200).json(token);
 }
