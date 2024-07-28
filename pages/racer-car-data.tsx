@@ -82,7 +82,7 @@ export const staticData = [
     imageUrl: '/racer-car-elements/equipment-0.png',
     specialEffects: 'Left and right faster by 30%',
     name: 'Golden Alloy',
-    type: 'equipment',
+    type: 'wheels',
     level: 0,
   },
   {
@@ -90,7 +90,7 @@ export const staticData = [
     imageUrl: '/racer-car-elements/equipment-1.png',
     specialEffects: 'Left and right faster by 50%',
     name: 'Carbon Fiber',
-    type: 'equipment',
+    type: 'wheels',
     level: 1,
   },
   {
@@ -98,7 +98,7 @@ export const staticData = [
     imageUrl: '/racer-car-elements/equipment-2.png',
     specialEffects: 'Left and right faster by 70%',
     name: 'Turbo Boost',
-    type: 'equipment',
+    type: 'wheels',
     level: 2,
   },
   {
@@ -106,7 +106,7 @@ export const staticData = [
     imageUrl: '/racer-car-elements/fuel-0.png',
     specialEffects: 'Fuel is 10% more',
     name: 'Red fuel',
-    type: 'fuel',
+    type: 'gas',
     level: 0,
   },
   {
@@ -114,7 +114,7 @@ export const staticData = [
     imageUrl: '/racer-car-elements/fuel-1.png',
     specialEffects: 'Fuel burn rate is 15% slower',
     name: 'Nitro Fuel',
-    type: 'fuel',
+    type: 'gas',
     level: 1,
   },
   {
@@ -122,7 +122,7 @@ export const staticData = [
     imageUrl: '/racer-car-elements/fuel-2.png',
     specialEffects: 'Fuel burn rate is down 50% in game',
     name: 'Eco Fuel',
-    type: 'fuel',
+    type: 'gas',
     level: 2,
   },
   // Add more elements as needed

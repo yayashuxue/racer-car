@@ -47,6 +47,7 @@ export interface NFTMarketPlaceData {
 }
 interface NFTTableProps {
   data: Array<{
+    type: string;
     name: ReactNode;
     cost: number;
     imageUrl: string;
@@ -96,6 +97,7 @@ const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
         <img src={row.imageUrl} style={{ width: '90%', height: '90%', objectFit: 'contain' }} />
         <Typography color='textPrimary'>{row.name}</Typography>
         <Typography color='textPrimary'>${row.cost}</Typography>
+        <Typography color='textPrimary'>${row.type}</Typography>
       </Box>
     );
   };
