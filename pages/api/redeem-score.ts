@@ -89,11 +89,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           properties: [
             {
               key: 'tokenData',
-              value: changeAttribute(token, 'Total Score', totalScore - cost[carLevel]),
+              value: changeAttribute(token, 'Total Score', totalScore - cost[gasLevel]),
             },
             {
               key: 'tokenData',
-              value: changeAttribute(token, 'Gas Level', carLevel),
+              value: changeAttribute(token, 'Gas Level', gasLevel),
             },
           ],
         },
@@ -102,7 +102,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     );
     const test = await Promise.all(transactions);
     res.status(200).json({ message: 'success' });
-  } else {
+  } else if (type === 'wheels') {
+    const { gasLevel } = args;
+    const transactions = [];
+
+    const cost: { [key: number]: number } = {
+      0: 1000,
+      1: 1500,
+      2: 2000,
+    };
+
+    const { wheelsLevel } = args;
+    if (totalScore < cost[wheelsLevel]) {
+      res.status(400).json({ message: 'Not enough score' });
+    }
+    transactions.push(
+      sdk.token.setProperties(
+        {
+          collectionId: 3429,
+          tokenId: token.tokenId,
+          // NOTICE: Attributes stored in "tokenData" property
+          properties: [
+            {
+              key: 'tokenData',
+              value: changeAttribute(token, 'Total Score', totalScore - cost[wheelsLevel]),
+            },
+            {
+              key: 'tokenData',
+              value: changeAttribute(token, 'Wheels Level', wheelsLevel),
+            },
+          ],
+        },
+        { nonce: nonce++ }
+      )
+    );
+    const test = await Promise.all(transactions);
     res.status(400).json({ message: 'Invalid type' });
   }
 }
