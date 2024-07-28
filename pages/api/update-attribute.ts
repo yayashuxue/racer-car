@@ -34,16 +34,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   let newTotalScore = Number(totalScore) + args.score;
   console.log({ newTotalScore });
   transactions.push(
-    await sdk.token.setProperties(
+    sdk.token.setProperties(
       {
         collectionId: 3429,
         tokenId: token.tokenId,
         // NOTICE: Attributes stored in "tokenData" property
         properties: [
-          {
-            key: 'tokenData',
-            value: changeAttribute(token, 'Total Score', newTotalScore),
-          },
           {
             key: 'tokenData',
             value: changeAttribute(token, 'High Score', usersHighestScore),
@@ -54,6 +50,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     )
   );
 
+  transactions.push(
+    sdk.token.setProperties(
+      {
+        collectionId: 3429,
+        tokenId: token.tokenId,
+        // NOTICE: Attributes stored in "tokenData" property
+        properties: [
+          {
+            key: 'tokenData',
+            value: changeAttribute(token, 'Total Score', newTotalScore),
+          },
+        ],
+      },
+      { nonce: nonce++ }
+    )
+  );
   const test = await Promise.all(transactions);
   console.log(test);
   res.status(200).json({ message: 'success' });
