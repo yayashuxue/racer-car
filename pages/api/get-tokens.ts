@@ -28,5 +28,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (token.error) {
     res.status(401).json({ message: token.error.message });
   }
-  res.status(200).json(token);
+  res.status(200).json(usersToken);
 }
