@@ -960,8 +960,8 @@ const GameComponent = () => {
       player.start = true;
       player.score = 0;
       player.fuel = 100;
-      gameStart.play();
-      gameStart.loop = true;
+      // gameStart.play();
+      // gameStart.loop = true;
       window.requestAnimationFrame(gamePlay);
       createFuelBar();
 
@@ -989,6 +989,15 @@ const GameComponent = () => {
         enemyCar.style.left = Math.floor(Math.random() * 350) + 'px';
         gameArea.appendChild(enemyCar);
       }
+
+      let fuel = document.createElement('div');
+      fuel.setAttribute('class', 'fuelCan');
+      fuel.y = 1 * 350 * -1;
+      fuel.style.top = fuel.y + 'px';
+      // fuel.style.backgroundColor = randomColor();
+      fuel.style.left = Math.floor(Math.random() * 350) + 'px';
+      gameArea.appendChild(fuel);
+      console.log('Fuel can created at position:', fuel.style.left, fuel.style.top);
     }
 
     function randomColor() {
@@ -1013,8 +1022,8 @@ const GameComponent = () => {
 
     function onGameOver() {
       player.start = false;
-      gameStart.pause();
-      gameOver.play();
+      // gameStart.pause();
+      // gameOver.play();
       startScreen.classList.remove('hide');
       startScreen.innerHTML =
         'Game Over <br> Your final score is ' +
@@ -1048,18 +1057,68 @@ const GameComponent = () => {
       });
     }
 
+    function moveFuel(carElement) {
+      let fuelCan = document.querySelectorAll('.fuelCan');
+      fuelCan.forEach((item) => {
+        if (item.y >= 750) {
+          item.y = -300;
+          item.style.left = Math.floor(Math.random() * 350) + 'px';
+        }
+        item.y += player.speed;
+        item.style.top = item.y + 'px';
+      });
+    }
+
+    function movetimeslower(carElement) {
+      let timeSlower = document.querySelectorAll('.timeSlower');
+      timeSlower.forEach((item) => {
+        if (onCollision(carElement, item)) {
+          onGameOver();
+        }
+        if (item.y >= 750) {
+          item.y = -300;
+          item.style.left = Math.floor(Math.random() * 350) + 'px';
+        }
+        item.y += player.speed;
+        item.style.top = item.y + 'px';
+      });
+    }
+
     function createItem() {
-      let item = document.createElement('div');
-      item.setAttribute('class', 'item');
-      item.y = -300;
-      item.style.top = item.y + 'px';
-      item.style.left = Math.floor(Math.random() * 350) + 'px';
+      
+      let item_two = document.createElement('div');
+      
+      item_two.y = -300;
+      item_two.style.top = item_two.y + 'px';
+      item_two.style.left = Math.floor(Math.random() * 350) + 'px';
       if (Math.random() < 0.7) {
-        item.classList.add('fuelCan');
+        item_two.setAttribute('class', 'fuelCan');
+        console.log('Fuel can created at position:', item_two.style.left, item_two.style.top);
+
       } else {
-        item.classList.add('timeSlower');
+        item_two.setAttribute('class', 'timeSlower');
+        console.log('Time slower created at position:', item_two.style.left, item_two.style.top);
+
       }
-      gameArea.appendChild(item);
+      gameArea.appendChild(item_two);
+
+
+      // let item = document.createElement('div');
+      // item.setAttribute('class', 'item');
+      // // item.y = -300;
+      // item.y = 198;
+      // item.style.top = item.y + 'px';
+      // item.style.left = Math.floor(Math.random() * 350) + 'px';
+      // if (Math.random() < 0.7) {
+      //   item.classList.add('fuelCan');
+      //   console.log('Fuel can created at position:', item.style.left, item.style.top);
+
+      // } else {
+      //   item.classList.add('timeSlower');
+      //   console.log('Time slower created at position:', item.style.left, item.style.top);
+
+      // }
+      // gameArea.appendChild(item);
     }
 
     function moveItems(carElement) {
@@ -1112,18 +1171,28 @@ const GameComponent = () => {
 
     function gamePlay() {
       let carElement = document.querySelector('.car');
+      let fuelElement = document.querySelector('.fuelCan');
+      // let timeSlower = document.querySelector('.timeSlower');
       let road = gameArea.getBoundingClientRect();
 
       if (player.start) {
         moveRoadLines();
         moveEnemyCars(carElement);
-        moveItems(carElement);
+        console.log('fuel element:', fuelElement);
+        moveFuel(fuelElement);
+        // movetimeslower(timeSlower);
+        // moveItems(carElement);
 
-        if (keys.ArrowUp && player.y > road.top + 70) player.y -= player.speed;
+        if (keys.ArrowUp && player.y > road.top + 70) {
+          // if (Math.random() < 0.99) {
+          //   // console.log("happening");
+          //   createItem();
+          // }
+          player.y -= player.speed};
         if (keys.ArrowDown && player.y < road.bottom - 85) player.y += player.speed;
         if (keys.ArrowLeft && player.x > 0) player.x -= player.speed;
         if (keys.ArrowRight && player.x < road.width - 70) player.x += player.speed;
-
+        console.log('player x:', player.x, 'player y:', player.y);
         carElement.style.top = player.y + 'px';
         carElement.style.left = player.x + 'px';
 
@@ -1136,10 +1205,7 @@ const GameComponent = () => {
         const ps = player.score - 1;
         score.innerHTML = 'Score: ' + ps;
         fuelBar.innerHTML = 'Fuel: ' + player.fuel;
-
-        if (Math.random() < 0.02) {
-          createItem();
-        }
+        
       }
     }
 
