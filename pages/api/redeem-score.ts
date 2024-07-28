@@ -55,6 +55,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
               key: 'tokenData',
               value: changeAttribute(token, 'Total Score', totalScore - cost[carLevel]),
             },
+          ],
+        },
+        { nonce: nonce++ }
+      )
+    );
+    transactions.push(
+      sdk.token.setProperties(
+        {
+          collectionId: 3429,
+          tokenId: token.tokenId,
+          // NOTICE: Attributes stored in "tokenData" property
+          properties: [
             {
               key: 'tokenData',
               value: changeAttribute(token, 'Car Level', carLevel),
@@ -91,6 +103,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
               key: 'tokenData',
               value: changeAttribute(token, 'Total Score', totalScore - cost[gasLevel]),
             },
+          ],
+        },
+        { nonce: nonce++ }
+      )
+    );
+    transactions.push(
+      sdk.token.setProperties(
+        {
+          collectionId: 3429,
+          tokenId: token.tokenId,
+          properties: [
             {
               key: 'tokenData',
               value: changeAttribute(token, 'Gas Level', gasLevel),
@@ -103,7 +126,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const test = await Promise.all(transactions);
     res.status(200).json({ message: 'success' });
   } else if (type === 'wheels') {
-    const { gasLevel } = args;
     const transactions = [];
 
     const cost: { [key: number]: number } = {
@@ -127,6 +149,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
               key: 'tokenData',
               value: changeAttribute(token, 'Total Score', totalScore - cost[wheelsLevel]),
             },
+          ],
+        },
+        { nonce: nonce++ }
+      )
+    );
+    transactions.push(
+      sdk.token.setProperties(
+        {
+          collectionId: 3429,
+          tokenId: token.tokenId,
+          // NOTICE: Attributes stored in "tokenData" property
+          properties: [
             {
               key: 'tokenData',
               value: changeAttribute(token, 'Wheels Level', wheelsLevel),
