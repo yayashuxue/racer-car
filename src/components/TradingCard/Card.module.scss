@@ -1,5 +1,7 @@
 // @import "@/styles/settings/_settings";
 
+
+
 @keyframes loading {
     0% {
         background-position: 100% 50%;
@@ -12,7 +14,14 @@
 .title {
     font-family: 'Aldrich';
 }
+
+.vacantBox {
+    border: 1px dashed #ccc;
+    background-color: #f9f9f9;
+}
+
 .card {
+    color: black; // Default font color
     font-family: 'Aldrich';
     display: block;
     width: 24em;

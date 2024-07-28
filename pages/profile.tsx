@@ -27,37 +27,41 @@ interface NFTTableProps {
   setOpenedNFTMetadata: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export const updateUser = async (address: string, x_account: string | null) => {
-  console.log('updateUser address:', address, 'x_account:', x_account);
-  try {
-    const response = await fetch(`${apiUrl}/updateUser`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ address, x_account }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
-
-//
 const Home: NextPage = () => {
   const router = useRouter();
   const { login, ready, authenticated, logout, user, unlinkTwitter, linkTwitter } = usePrivy();
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<any>(null);
   const { wallets } = useWallets();
   const wallet = user?.wallet;
   // Inside your component
   const addressFromUrl = router.query.address;
+
   const [address, setAddress] = useState('');
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/distribute-nft?address=${address}`, {
+          method: 'GET', // or 'POST' if your endpoint expects a POST request
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log('succeed');
+
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error('Failed to fetch:', error);
+      }
+    };
+
+    if (address && address != '') {
+      getData();
+    }
+  }, [address]);
+
 
     const cardRef = useRef(null);
 
@@ -72,122 +76,50 @@ const Home: NextPage = () => {
           link.download = 'card.png';
           link.href = dataUrl;
           link.click();
+          // Twitter redirect with pre-filled tweet
+          const tweetText = encodeURIComponent(
+            "I'm top player on Rac3r at rac3r.vercel.app powered by @Unique_NFTchain & @Polkadot"
+          );
+          const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+          window.open(twitterUrl, '_blank', 'noopener,noreferrer');
         })
         .catch((err: any) => {
           console.error('Failed to export card as PNG', err);
         });
     };
 
-  const { showError } = useSnackBar();
-  useEffect(() => {
-    if (addressFromUrl) {
-      setAddress(Array.isArray(addressFromUrl) ? addressFromUrl[0] : addressFromUrl);
-    } else {
-      if (ready && authenticated) setAddress(user?.wallet?.address ?? '');
-    }
-  }, [addressFromUrl, ready, authenticated, user]);
-
-  useEffect(() => {
-    if (address === '') {
-      login();
-    }
-  }, [address]);
-  const [attributes, setAttributes] = useState(POKEMON_ATTRIBUTES);
-
-  const updateAttributes = () => {
-    setAttributes({
-      ...attributes,
-      name: 'gmgm',
-      effect: {
-        ...attributes.effect,
-        name: 'Updated Floral Strike',
-      },
-      level: 123,
-      // Add more updates as needed
-    });
-  };
-
-  useEffect(() => {
-    const updateUserIfTwitterExists = async () => {
-      if (
-        authenticated &&
-        ready &&
-        user?.twitter &&
-        user?.wallet?.address &&
-        user?.wallet?.address !== '0x' &&
-        user?.wallet?.address != ''
-      ) {
-        try {
-          await updateUser(user?.wallet?.address, user?.twitter.username);
-        } catch (error) {
-          console.error('Error:', error);
-        }
+    const { showError } = useSnackBar();
+    useEffect(() => {
+      if (addressFromUrl) {
+        setAddress(Array.isArray(addressFromUrl) ? addressFromUrl[0] : addressFromUrl);
+        console.log('addressFromUrl:', addressFromUrl);
+      } else {
+        if (ready && authenticated) setAddress(user?.wallet?.address ?? '');
       }
-    };
+    }, [addressFromUrl, ready, authenticated, user]);
 
-    updateUserIfTwitterExists();
-  }, [authenticated, ready, user?.twitter, user]);
+    useEffect(() => {
+      if (address === '') {
+        login();
+      }
+    }, [address]);
+
 
   useEffect(() => {
     if (wallets && wallets[0] && Number(wallets[0].chainId) !== opal.id) {
       wallets[0].switchChain(opal.id);
     }
-  }, [wallets]);
+  }, [wallets, authenticated, ready, user]);
 
-  const [earningRate, setEarningRate] = useState<number>(0);
   const tokenBalance = useTokenBalance(address);
   const [openWithdraw, setOpenWithdraw] = useState(false);
   const [listNFTOpen, setListNFTOpen] = useState(false);
   const [openedNFTMetadata, setOpenedNFTMetadata] = useState<any>({});
   const [twitter, setTwitter] = useState(null);
 
-  useEffect(() => {
-    if (address) {
-      fetch(`${apiUrl}/getUserNFTs?address=${address}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setData(data);
-        })
-        .catch((error) => {
-          console.error('Failed to fetch data:', error);
-        });
-    }
-  }, [address]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/getUser/${address}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setTwitter(data.x_account);
-      } catch (error) {
-        console.log('Error:', error);
-      }
-    };
-
-    if (address) {
-      fetchUser();
-    }
-  }, [ready, authenticated, user?.twitter, address]);
-
-  // const fetchEarningRate = async () => {
-  //   const response = await fetch(`${apiUrl}/getEarningRate?address=${address}`);
-  //   const data = await response.json();
-  //   setEarningRate(data.data);
-  // };
-  // useEffect(() => {
-  //   if (address && address !== '0x') {
-  //     fetchEarningRate();
-  //   }
-  // }, [address]);
+console.log('Address:', address);
+console.log('Data:', data);
+console.log('Condition:', !!(address && address !== '' && address !== '0x0' && data));
   if (address === '') {
     return (
       <div className={styles.profileContainer}>
@@ -238,71 +170,13 @@ const Home: NextPage = () => {
       </Head> */}
         <Box display='flex' justifyContent='center'>
           <Box width={{ xs: '100%', md: '50%' }} textAlign='center'>
-            {address && (
-              <OpponentDetail
-                address={address as `0x${string}`}
-                isDealer={false}
-                isUserTurn={false}
-                isGamePlayPage={false}
-              ></OpponentDetail>
-            )}
-            {twitter && (
-              <Typography color='textPrimary'>
-                Twitter:{' '}
-                <Box component='span' color='success.main'>
-                  <a
-                    href={`https://twitter.com/${twitter}`}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    @{twitter}{' '}
-                  </a>
-                </Box>
-              </Typography>
-            )}
-            {wallet?.address === address &&
-              (user?.twitter ? (
-                <Typography
-                  color='textPrimary'
-                  onClick={async () => {
-                    if (window.confirm('Are you sure you want to unlink?')) {
-                      if (ready && authenticated && user.twitter)
-                        try {
-                          await unlinkTwitter(user?.twitter.subject ?? '');
-                          await updateUser(wallet?.address, null);
-                        } catch (error) {
-                          showError((error as Error).message);
-                        }
-                    }
-                  }}
-                >
-                  (<u>unlink</u>)
-                </Typography>
-              ) : (
-                wallet?.address === address && (
-                  <Typography
-                    color='success.main'
-                    onClick={async () => {
-                      linkTwitter();
-                    }}
-                  >
-                    <u>Link Twitter</u>
-                  </Typography>
-                )
-              ))}
-
-            <Typography color='textPrimary'>
-              Score:{' '}
-              <Box component='span' color='success.main'>
-                {tokenBalance}
-                🚗
-              </Box>
-            </Typography>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <div ref={cardRef}>
-                <Card image={'/racer-car-elements/car-0.png'} />
+                {!!(address && address !== '' && address !== '0x0' && data) && data ? (
+                  <Card data={data} />
+                ) : null}
               </div>
-            </div>
+            </div>{' '}
             {/* <Box mt={2}>
               {Object.keys(data).length === 0 ? (
                 <>

@@ -25,7 +25,7 @@ import { set } from 'lodash';
 import { number } from 'zod';
 import { apiUrl, config } from '../config';
 import { BuyNFTDialog } from 'src/components/BuyNFTDialog';
-
+import { staticData } from './racer-car-data';
 const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => {
   const rarityValue = parseInt(rarity, 10);
   if (rarityValue <= 50) {
@@ -39,93 +39,6 @@ const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => 
   }
 };
 
-const staticData = [
-  {
-    cost: 100,
-    imageUrl: '/racer-car-elements/car-1.png',
-    specialEffects: 'Effect 1',
-    name: 'FORD',
-  },
-  {
-    cost: 250,
-    imageUrl: '/racer-car-elements/car-2.png',
-    specialEffects: 'Effect 2',
-    name: 'Truck',
-  },
-  {
-    cost: 500,
-    imageUrl: '/racer-car-elements/car-3.png',
-    specialEffects: 'Effect 3',
-    name: 'Honda 🐂',
-  },
-  {
-    cost: 1000,
-    imageUrl: '/racer-car-elements/car-4.png',
-    specialEffects: 'Effect 3',
-    name: 'Maybach',
-  },
-  {
-    cost: 2000,
-    imageUrl: '/racer-car-elements/car-5.png',
-    specialEffects: 'Effect 5',
-    name: 'Stretch Lincoln',
-  },
-  {
-    cost: 3000,
-    imageUrl: '/racer-car-elements/car-6.png',
-    specialEffects: 'Effect 5',
-    name: 'Bugatti',
-  },
-  {
-    cost: 4000,
-    imageUrl: '/racer-car-elements/car-7.png',
-    specialEffects: 'Effect 5',
-    name: 'Pagani',
-  },
-  {
-    cost: 100000,
-    imageUrl: '/racer-car-elements/car-8.png',
-    specialEffects: 'Legendary Effect, Earning * 2',
-    name: 'Nascar',
-  },
-  {
-    cost: 1000,
-    imageUrl: '/racer-car-elements/equipment-0.png',
-    specialEffects: 'Legendary Effect, Earning * 2',
-    name: 'Golden Alloy',
-  },
-  {
-    cost: 2000,
-    imageUrl: '/racer-car-elements/equipment-1.png',
-    specialEffects: 'Legendary Effect, Earning * 2',
-    name: 'Carbon Fiber',
-  },
-  {
-    cost: 4000,
-    imageUrl: '/racer-car-elements/equipment-2.png',
-    specialEffects: 'Legendary Effect, Earning * 2',
-    name: 'Turbo Boost',
-  },
-  {
-    cost: 1000,
-    imageUrl: '/racer-car-elements/fuel-0.png',
-    specialEffects: 'Legendary Effect, Earning * 2',
-    name: 'Golden Alloy',
-  },
-  {
-    cost: 2000,
-    imageUrl: '/racer-car-elements/fuel-1.png',
-    specialEffects: 'Legendary Effect, Earning * 2',
-    name: 'Carbon Fiber',
-  },
-  {
-    cost: 4000,
-    imageUrl: '/racer-car-elements/fuel-2.png',
-    specialEffects: 'Legendary Effect, Earning * 2',
-    name: 'Turbo Boost',
-  },
-  // Add more elements as needed
-];
 
 export interface NFTMarketPlaceData {
   tokenId: string;
@@ -183,7 +96,7 @@ const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
       >
         <img src={row.imageUrl} style={{ width: '90%', height: '90%', objectFit: 'contain' }} />
         <Typography color='textPrimary'>{row.name}</Typography>
-        <Typography color='textPrimary'>{row.cost} UNQ</Typography>
+        <Typography color='textPrimary'>${row.cost}</Typography>
       </Box>
     );
   };

@@ -125,7 +125,7 @@ useEffect(() => {
       setOwner(address);
       setIsPurchaseSuccessful(true);
       // Show success message
-      showSuccess('NFT listed purhcased successfully at ' + price + ' UNQ');
+      showSuccess('NFT listed purhcased successfully at $' + price );
     } else {
       // Show error message
       showError('Error: ' + response.status + ' ' + response.statusText);
@@ -145,13 +145,13 @@ useEffect(() => {
       <CloseDialogButton handleClose={close} />
       <DialogContent>
         <Box p={{ xs: 2, md: 4, textAlign: 'center' }} pb={{ xs: 2, md: 1 }}>
-          <Typography fontSize={20}>Purchase Equipment</Typography>
+          {/* <Typography fontSize={20}>Purchase Equipment</Typography> */}
           {metadata && (
             <div>
               <Typography fontSize={20}> {metadata.name}</Typography>
               <Typography> {metadata.specialEffects}</Typography>
               <Typography>
-                Cost: {metadata.cost} UNQ
+                Cost: ${metadata.cost} 
               </Typography>
               <img
                 src={metadata?.imageUrl}
