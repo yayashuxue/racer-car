@@ -1,8 +1,4 @@
-import {
-  Box,
-  Button,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -29,7 +25,6 @@ const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => 
     return 'Legendary';
   }
 };
-
 
 export interface NFTTableData {
   tokenId: string;
@@ -261,6 +256,7 @@ const Home: NextPage = () => {
           <Box display='flex' justifyContent='center'>
             <Box width={{ xs: '100%', md: '50%' }} textAlign='center'>
               <AnimatedCard cardNumber={-1} rarity={'Rare'} />
+
               <Typography>Connect Wallet To See Your Profile</Typography>
               <Box
                 display='flex'
