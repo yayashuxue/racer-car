@@ -33,7 +33,7 @@ Interactive Trading Portal: Enhance gameplay with power-ups.
 Clone the repository:
 
 ```
-git clone https://github.com/your-username/web3-race-car-game.git
+git clone https://github.com/yayashuxue/racer-car.git
 
 npm install
 
