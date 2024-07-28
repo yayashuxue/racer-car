@@ -30,13 +30,24 @@ body, html {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-.car, .enemyCar {
-  width: 50px;
+.enemyCar {
+  width: 40px;
   height: 70px;
   background: red;
   position: absolute;
   bottom: 120px;
   background-image: url('/assets/images/car.png');
+  background-repeat: no-repeat;
+  opacity: 0.8; /* This sets 50% opacity for the whole div */
+  background-size: 100% 100%;
+}
+.car {
+  width: 50px;
+  height: 70px;
+  /* background: red; */
+  position: absolute;
+  bottom: 120px;
+  background-image: url('/assets/images/GreenStrip.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -120,7 +131,6 @@ body, html {
 }
 
 .level button {
-  padding: 25px 35px; /* Increase padding for a bigger button */
   font-size: 20px; /* Increase font size */
 
   padding: 7px;
@@ -132,7 +142,7 @@ body, html {
   cursor: pointer;
   outline: none;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  transition: all 0.3s ease; /* Smooth transitions */
+  transition: all 0.6s ease; /* Smooth transitions */
 }
 
 .level {
