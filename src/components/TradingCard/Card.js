@@ -1,5 +1,5 @@
 import { POKEMON_TYPES, POKEMON_ATTRIBUTES } from './data';
-
+import { Box } from '@mui/material';
 import styles from './Card.module.scss';
 const mapRarity = (level) => {
   const rarityValue = parseInt(level, 10);
@@ -63,15 +63,25 @@ const Card = ({ userAttributes = POKEMON_ATTRIBUTES, image: userImage, isLoading
           <span className={styles.cardAddOn}>
             <span className={styles.cardInteractionTitle}>AddOn</span>
             <span className={styles.cardAddOnIcon} style={{ backgroundColor: colorAddOn }}>
-              <span className='sr-only'>{attributes?.AddOn}</span>
-              <IconAddOn />
+              <Box>
+                <img
+                  src={'/racer-car-elements/equipment-0.png'}
+                  className={styles.fancyBorder}
+                  height='50px'
+                />
+              </Box>
             </span>
           </span>
           <span className={styles.cardFuel}>
             <span className={styles.cardInteractionTitle}>Fuel</span>
             <span className={styles.cardFuelIcon} style={{ backgroundColor: colorFuel }}>
-              <span className='sr-only'>{attributes?.Fuel}</span>
-              <IconFuel />
+              <Box>
+                <img
+                  src={'/racer-car-elements/fuel-0.png'}
+                  className={styles.fancyBorder}
+                  height='50px'
+                />
+              </Box>
             </span>
           </span>
           <span className={styles.cardRetreatCost}>

@@ -168,14 +168,13 @@ font-size: 1.2em;
 }
 
 .cardAttack {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: 'Aldrich'; 
     font-size: 1em;
-    border-top: solid 1px black;
-    border-bottom: solid 1px black;
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
     padding: 1em 0;
     margin: 1em 0;
 
@@ -213,6 +212,7 @@ font-size: 1.2em;
 .cardAddOn,
 .cardFuel,
 .cardRetreatCost {
+    font-family: 'Aldrich';
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -221,14 +221,13 @@ font-size: 1.2em;
 .cardAddOnIcon,
 .cardFuelIcon,
 .cardRetreatCostIcon {
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 1.5em;
     height: 1.5em;
     font-family: 'Aldrich'; 
-font-size: 1.2em;
+    font-size: 1.2em;
     background-color: black;
     border: solid 2px white;
     border-radius: 1.5em;
@@ -240,14 +239,22 @@ font-size: 1.2em;
     }
 
 }
-
+.fancyBorder {
+    border: 1.5px solid;
+    margin: 10px;
+    /* Example color */
+    border-radius: 5px;
+    /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Shadow for a fancy effect */
+}
 .cardRetreatCostIcon {
     background-color: lightgray;
 }
 
 .referenceCard {
   font-family: 'Aldrich'; 
-font-size: 1.8rem; // 1.4 times bigger base font size
+    font-size: 1.8rem; // 1.4 times bigger base font size
   padding: 1.4rem; // 1.4 times bigger padding
   margin: 1.4rem; // 1.4 times bigger margin
 }

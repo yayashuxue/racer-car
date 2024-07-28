@@ -201,6 +201,17 @@ export const Layout = ({ children }: LayoutProps) => {
                   🏆 Leaderboard
                 </StyledButton>
               )}
+              {!isMobile && pathname !== '/game' && (
+                <StyledButton
+                  onClick={() => {
+                    router.push('/game');
+                  }}
+                  variant='text'
+                  type='button'
+                >
+                  🎮 Game
+                </StyledButton>
+              )}
             </Box>
           </Box>
         </Box>

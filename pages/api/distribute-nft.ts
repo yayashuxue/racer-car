@@ -12,15 +12,42 @@ type ResponseData = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-  const args = req.body;
-  const [carsCollectionId, achievementsCollectionId, tokenId1, tokenId2] = args;
+  const { address } = req.query;
+  if (!address || typeof address !== 'string') {
+    res.status(400).json({ message: 'Address is required' });
+  }
   const { account, sdk } = await connectSdk();
-  console.log(account);
-  const test = await sdk.token.transfer({
-    collectionId: 3225,
-    tokenId: 3,
-    to: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+  const tokensResult: AccountTokensResult = await sdk.token.accountTokens({
+    collectionId: 3288,
+    address: address,
   });
-  console.log(test);
-  res.status(200).json({ test });
+  if (tokensResult.tokens.length > 0) {
+    const token = tokensResult.tokens[0];
+    const usersToken = await sdk.token.properties(token);
+    res.status(200).json(usersToken);
+  }
+  const token = await sdk.token.createV2({
+    collectionId: 3288,
+    image: 'https://gateway.pinata.cloud/ipfs/QmeNzaLfsUUi5pGmhrASEpXF52deCDuByeKbU7SuZ9toEi',
+    owner: address, // Use the address from the query parameters as the owner
+    attributes: [
+      {
+        trait_type: 'Total Score',
+        value: 0,
+      },
+      {
+        trait_type: 'High Score',
+        value: 0,
+      },
+      {
+        trait_type: 'Car Level',
+        value: 0,
+      },
+    ],
+  });
+  console.log(token);
+  if (token.error) {
+    res.status(401).json({ message: token.error.message });
+  }
+  res.status(200).json({ data: token });
 }

@@ -53,24 +53,24 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const airdrop = async () => {
-      showSuccess('Airdropping base Sepolia ETH...');
-      const response = await fetch(`${apiUrl}/airdrop`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          address: address,
-        }),
-      });
+      // showSuccess('Airdropping base Sepolia UNQ...');
+      // const response = await fetch(`${apiUrl}/airdrop`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     address: address,
+      //   }),
+      // });
 
-      if (!response.ok) {
-        // Handle error
-        console.error('Airdrop request failed');
-      } else {
-        // Refetch the balance after a successful airdrop
-        refetch();
-      }
+      // if (!response.ok) {
+      //   // Handle error
+      //   console.error('Airdrop request failed');
+      // } else {
+      //   // Refetch the balance after a successful airdrop
+      //   refetch();
+      // }
     };
 
     // Only call airdrop if balance.data is loaded and balance is 0, and airdrop has not been requested yet
@@ -100,6 +100,11 @@ const Home: NextPage = () => {
             gap={2}
             my={3}
           >
+            <img
+              src='/racer-car.gif'
+              alt='Racer Car'
+              style={{ width: '150%', maxWidth: '900px' }}
+            />
             <Typography fontSize={20} color='textPrimary'>
               Race your way to the top
             </Typography>

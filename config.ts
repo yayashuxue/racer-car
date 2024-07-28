@@ -11,11 +11,11 @@ export const opal: Chain = {
   name: 'Opal testnet',
   nativeCurrency: { name: 'UNQ', symbol: 'UNQ', decimals: 18 },
   rpcUrls: {
-    default: { http: ['https://explorer.opal.unique.network/'] },
+    default: { http: ['https://rpc-opal.unique.network/'] },
   },
-  // blockExplorers: {
-  //   default: { name: 'inco', url: 'https://explorer.testnet.inco.org/' }
-  // }
+  blockExplorers: {
+    default: { name: 'unq', url: 'https://uniquescan.io/' }
+  }
 };
 export const config = createConfig({
   chains: [opal],

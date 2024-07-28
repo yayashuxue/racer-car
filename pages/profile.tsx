@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import AnimatedCard from 'src/components/AnimatedCard';
@@ -9,11 +9,12 @@ import { OpponentDetail } from 'src/components/OpponentDetail';
 import { useTokenBalance } from 'src/apihook/useTokenBalance';
 import styles from 'styles/Home.module.css';
 import { FixedSizeGrid as Grid } from 'react-window';
-import { baseSepolia } from 'viem/chains';
 import { apiUrl } from 'config';
 import { useSnackBar } from 'src/hook/useSnackBar';
 import Card from 'src/components/TradingCard/Card';
 import { POKEMON_ATTRIBUTES } from 'src/components/TradingCard/data';
+import { opal } from 'config';
+import { toPng } from 'html-to-image';
 
 export interface NFTTableData {
   tokenId: string;
@@ -56,8 +57,27 @@ const Home: NextPage = () => {
   const wallet = user?.wallet;
   // Inside your component
   const addressFromUrl = router.query.address;
-
   const [address, setAddress] = useState('');
+
+    const cardRef = useRef(null);
+
+    const handleExport = () => {
+      if (cardRef.current === null) {
+        return;
+      }
+
+      toPng(cardRef.current)
+        .then((dataUrl: string) => {
+          const link = document.createElement('a');
+          link.download = 'card.png';
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((err: any) => {
+          console.error('Failed to export card as PNG', err);
+        });
+    };
+
   const { showError } = useSnackBar();
   useEffect(() => {
     if (addressFromUrl) {
@@ -109,8 +129,8 @@ const Home: NextPage = () => {
   }, [authenticated, ready, user?.twitter, user]);
 
   useEffect(() => {
-    if (wallets && wallets[0] && Number(wallets[0].chainId) !== baseSepolia.id) {
-      wallets[0].switchChain(baseSepolia.id);
+    if (wallets && wallets[0] && Number(wallets[0].chainId) !== opal.id) {
+      wallets[0].switchChain(opal.id);
     }
   }, [wallets]);
 
@@ -278,7 +298,11 @@ const Home: NextPage = () => {
                 🚗
               </Box>
             </Typography>
-            <Card image={'/racer-car-elements/car-0.png'} />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div ref={cardRef}>
+                <Card image={'/racer-car-elements/car-0.png'} />
+              </div>
+            </div>
             {/* <Box mt={2}>
               {Object.keys(data).length === 0 ? (
                 <>
@@ -303,6 +327,9 @@ const Home: NextPage = () => {
               gap={2}
               my={3}
             >
+              <Button variant='outlined' onClick={handleExport}>
+                Shill it on Twitter
+              </Button>
               <Button
                 variant='contained'
                 onClick={() => {
