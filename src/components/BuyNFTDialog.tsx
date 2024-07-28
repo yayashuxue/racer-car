@@ -56,7 +56,8 @@ type Props = {
 };
 
 type MetadataType = {
-  cardNumber: number;
+  imageUrl: string | undefined;
+  specialEffects: number;
   rarity: number;
 };
 
@@ -77,7 +78,7 @@ export const BuyNFTDialog = ({ setOwner, row, open, handleClose }: Props) => {
   const [isPurchaseSuccessful, setIsPurchaseSuccessful] = useState(false);
   // const [isApproved, setIsApproved] = useState(false);
   const isLightTheme = theme.palette.mode === 'light';
-  const [metadata, setMetadata] = useState<MetadataType | null>(null);
+  const [metadata, setMetadata] = useState<any>(null);
   const [tokenId, setTokenId] = useState(-1);
   const [price, setPrice] = useState(-1);
   const [approvalSubmitted, setApprovalSubmitted] = useState(false);
@@ -86,8 +87,10 @@ export const BuyNFTDialog = ({ setOwner, row, open, handleClose }: Props) => {
   useEffect(() => {
     if(row){
       setMetadata({
-        cardNumber: row?.cardNumber,
-        rarity: row?.rarity,
+        cost: row?.cost,
+        name: row?.name,
+        specialEffects: row?.specialEffects,
+        imageUrl: row?.imageUrl,
       });
       setTokenId(Number(row?.id));
       setIsListingSuccessful(row?.forSale);
@@ -96,6 +99,7 @@ export const BuyNFTDialog = ({ setOwner, row, open, handleClose }: Props) => {
 
     console.log('row data', row);
   }, [row]);
+  
 useEffect(() => {
   console.log('Metadata:', metadata);
 }, [metadata]);
@@ -144,15 +148,36 @@ useEffect(() => {
           <Typography fontSize={20}>Purchase Equipment</Typography>
           {metadata && (
             <div>
-              <Typography>Card Number: {metadata.cardNumber}</Typography>
+              <Typography fontSize={20}> {metadata.name}</Typography>
+              <Typography> {metadata.specialEffects}</Typography>
               <Typography>
-                Rarity Score: {metadata.rarity} {mapRarity(metadata?.rarity?.toString())}
+                Cost: {metadata.cost} UNQ
               </Typography>
-              {/* <AnimatedCard
-                key={metadata.cardNumber}
-                rarity={mapRarity(metadata?.rarity?.toString())}
-                cardNumber={metadata.cardNumber}
-              /> */}
+              <img
+                src={metadata?.imageUrl}
+                alt='card'
+                style={{
+                  width: '300px',
+                  height: '300px',
+                  animation: 'pulse 2s infinite', // Pulse animation
+                }}
+              />
+
+              <style>
+                {`
+                  @keyframes pulse {
+                    0% {
+                      transform: scale(1);
+                    }
+                    50% {
+                      transform: scale(1.05);
+                    }
+                    100% {
+                      transform: scale(1);
+                    }
+                  }
+                `}
+              </style>
             </div>
           )}
 
