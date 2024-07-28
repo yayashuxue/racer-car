@@ -30,6 +30,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       totalScore: v2Result.attributes.find((a) => a.trait_type === 'Total Score').value,
       points: String(v2Result.attributes.find((a) => a.trait_type === 'High Score').value),
       carLevel: v2Result.attributes.find((a) => a.trait_type === 'Car Level').value,
+      wheelsLevel: v2Result.attributes.find((a) => a.trait_type === 'Wheels Level').value,
+      gasLevel: v2Result.attributes.find((a) => a.trait_type === 'Gas Level').value,
     });
   }
   const token = await sdk.token.createV2({
@@ -63,7 +65,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(401).json({ message: token.error.message });
   }
   console.log('hit');
-  res
-    .status(200)
-    .json({ address: address, totalScore: 0, points: 0, carLevel: 0, gasLevel: 0, wheelsLevel: 0 });
+  res.status(200).json({
+    address: address,
+    totalScore: 0,
+    points: 0,
+    carLevel: 0,
+    gasLevel: -1,
+    wheelsLevel: 0,
+  });
 }
