@@ -22,7 +22,7 @@ const GameComponent = () => {
     // gameStart.src = "assets/audio/game_theme.mp3";
     // gameOver.src = "assets/audio/gameOver_theme.mp3";
 
-    const levelSpeed = { easy: 7, moderate: 10, difficult: 14 };
+    const levelSpeed = { easy: 2, moderate: 10, difficult: 14 };
 
     let keys = {
       ArrowUp: false,
