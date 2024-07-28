@@ -13,6 +13,7 @@ import { useSnackBar } from 'src/hook/useSnackBar';
 import { useRouter } from 'next/router';
 // import {WithdrawGlobalChipDialog} from 'src/components/WithdrawGlobalChipDialog';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
+import {ShowCardDialog} from 'src/components/ShowCardDialog';
 
 export type TableData = {
   tableId: number;
@@ -27,9 +28,10 @@ export type TableData = {
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const [data, setData] = useState<TableData[]>([]);
+  const [data, setData] = useState<any>();
   // TODO - for dev use
   const { showSuccess, showError } = useSnackBar();
+  const [showCardOpen, setShowCardOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [openWithdraw, setOpenWithdraw] = useState(false);
   const [openGetToken, setOpenGetToken] = useState(false);
@@ -64,7 +66,10 @@ const Home: NextPage = () => {
         console.log('succeed');
 
         const data = await response.json();
-        console.log(data.message); // Handle the response data as needed
+        setShowCardOpen(true);
+        console.log(data); // Handle the response data as needed
+        setData(data);
+
       } catch (error) {
         console.error('Failed to fetch:', error);
       }
@@ -132,6 +137,11 @@ const Home: NextPage = () => {
               Start Playing
             </Button>
           </Box>
+          <ShowCardDialog
+            open={showCardOpen}
+            handleClose={() => setShowCardOpen(false)}
+            data={data}
+          />
         </Box>
       </Box>
     </Box>

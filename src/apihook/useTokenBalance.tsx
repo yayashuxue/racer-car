@@ -1,20 +1,29 @@
-import {apiUrl} from 'config';
-import { useState, useEffect } from 'react';
+import { apiUrl } from 'config';
+import { useEffect, useState } from 'react';
 
-export const useTokenBalance = (address: unknown) => {
-  const [tokenBalance, setTokenBalance] = useState(null);
+export const useTokenBalance = (address: string) => {
+  const [tokenBalance, setTokenBalance] = useState(0);
 
   useEffect(() => {
     const fetchTokenBalance = async () => {
-      const response = await fetch(`${apiUrl}/getTokenBalance?address=${address}`);
-      const data = await response.json();
-      setTokenBalance(data.data);
+      try {
+        const response = await fetch(`${apiUrl}/api/distribute-nft?address=${address}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setTokenBalance(data.totalScore);
+      } catch (error) {
+        console.error('Failed to fetch:', error);
+      }
     };
-    fetchTokenBalance();
-    const intervalId = setInterval(fetchTokenBalance, 10 * 1000); // refetch every minute
 
-    return () => clearInterval(intervalId); // cleanup on unmount
+    if (address && address !== '') {
+      fetchTokenBalance();
+    }
   }, [address]);
 
   return tokenBalance;
 };
+
+

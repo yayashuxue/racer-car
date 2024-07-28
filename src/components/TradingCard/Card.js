@@ -1,31 +1,39 @@
 import { POKEMON_TYPES, POKEMON_ATTRIBUTES } from './data';
 import { Box } from '@mui/material';
 import styles from './Card.module.scss';
+import { staticData, findByTypeAndLevel} from 'pages/racer-car-data';
+import { maskAddress } from 'src/utils/maskAddress';
+
 const mapRarity = (level) => {
   const rarityValue = parseInt(level, 10);
-  if (rarityValue <= 50) {
-    return 'Common';
+  if (rarityValue <= 10) {
+    return 'Newbie';
   } else if (rarityValue <= 80) {
-    return 'Rare';
+    return 'Amateur';
   } else if (rarityValue <= 95) {
-    return 'Epic';
+    return 'Professional';
   } else {
     return 'Legendary';
   }
 };
 
-const Card = ({ userAttributes = POKEMON_ATTRIBUTES, image: userImage, isLoading = false }) => {
+const Card = ({ userAttributes = POKEMON_ATTRIBUTES, data, isLoading = false }) => {
   const isEmpty = !userAttributes && !userImage && !isLoading;
 
   const attributes = userAttributes || POKEMON_ATTRIBUTES;
-  const rarity = mapRarity(attributes?.level);
-
-  const image = userImage || {};
-  console.log('userImage: ', userImage);
 
   const type = attributes.type?.toLowerCase();
   const AddOn = attributes.AddOn?.toLowerCase();
   const Fuel = attributes.Fuel?.toLowerCase();
+  const name = data?.address ? maskAddress(data?.address) : '';
+  const carInfo = findByTypeAndLevel('car', data?.carLevel);
+  const fuelInfo = findByTypeAndLevel('fuel', data?.gasLevel);
+  const equipmentInfo = findByTypeAndLevel('equipment', data?.wheelsLevel);
+
+  const image = carInfo?.imageUrl ? carInfo.imageUrl : '/racer-car-elements/car-0.png';
+
+  const level = Math.floor(Math.sqrt(data.totalScore / 100));
+  const rarity = mapRarity(level);
 
   const { Icon: IconType, color: colorType } = POKEMON_TYPES[type] || POKEMON_TYPES['ground'];
   const { Icon: IconAddOn, color: colorAddOn } = POKEMON_TYPES[AddOn] || POKEMON_TYPES['default'];
@@ -42,33 +50,33 @@ const Card = ({ userAttributes = POKEMON_ATTRIBUTES, image: userImage, isLoading
           <span>
             <span className={styles.cardHp}>
               <span>Level</span>
-              {attributes?.level}
+              {level}
             </span>
           </span>
         </span>
         <span className={styles.cardImage} data-is-loading={isLoading}>
           <img src={image} />
         </span>
-        <span className={styles.cardAttributes}>No special attributes</span>
-        <span className={styles.cardPower}>
-          <strong>{attributes?.effect?.name}</strong> {attributes?.effect?.description}
+        <span className={styles.cardAttributes}>{carInfo.name}</span>
+        <span className={styles.cardPower} style={{ fontFamily: 'Aldrich' }}>
+          <strong>{}</strong> {carInfo.specialEffects}
         </span>
-        <span className={styles.cardAttack}>
-          <span>
-            <strong>{attributes?.power?.name}</strong> {attributes?.power?.description}
+        <span className={styles.cardAttack} style={{ fontFamily: 'Aldrich' }}>
+          <span style={{ fontFamily: 'Aldrich' }}>
+            <strong>Highest Score</strong> {data?.points}
           </span>
-          <span className={styles.cardAttackHp}>{attributes?.power?.level}</span>
+          <span className={styles.cardAttackHp}>{data?.totalScore}</span>
         </span>
         <span className={styles.cardInteractions}>
           <span className={styles.cardAddOn}>
             <span className={styles.cardInteractionTitle}>AddOn</span>
             <span className={styles.cardAddOnIcon} style={{ backgroundColor: colorAddOn }}>
               <Box>
-                <img
-                  src={'/racer-car-elements/equipment-0.png'}
-                  className={styles.fancyBorder}
-                  height='50px'
-                />
+                {equipmentInfo ? (
+                  <img src={equipmentInfo.imageUrl} className={styles.fancyBorder} height='50px' />
+                ) : (
+                  <div className={styles.vacantBox} style={{ height: '50px', width: '50px' }}></div>
+                )}
               </Box>
             </span>
           </span>
@@ -76,11 +84,11 @@ const Card = ({ userAttributes = POKEMON_ATTRIBUTES, image: userImage, isLoading
             <span className={styles.cardInteractionTitle}>Fuel</span>
             <span className={styles.cardFuelIcon} style={{ backgroundColor: colorFuel }}>
               <Box>
-                <img
-                  src={'/racer-car-elements/fuel-0.png'}
-                  className={styles.fancyBorder}
-                  height='50px'
-                />
+                {fuelInfo ? (
+                  <img src={fuelInfo.imageUrl} className={styles.fancyBorder} height='50px' />
+                ) : (
+                  <div className={styles.vacantBox} style={{ height: '50px', width: '50px' }}></div>
+                )}
               </Box>
             </span>
           </span>
