@@ -23,7 +23,7 @@ body, html {
 .fuelCan {
   width: 50px;
   height: 70px;
-  background: rgba(24, 255, 43, 0.526);
+  background: rgba(24, 255, 43, 0.426);
   position: absolute;
   bottom: 120px;
   background-image: url('/assets/images/fuel.png');
@@ -38,7 +38,7 @@ body, html {
   bottom: 120px;
   background-image: url('/assets/images/car.png');
   background-repeat: no-repeat;
-  opacity: 0.8; /* This sets 50% opacity for the whole div */
+  opacity: 0.9; /* This sets 50% opacity for the whole div */
   background-size: 100% 100%;
 }
 .car {

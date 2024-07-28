@@ -6,7 +6,6 @@ import { changeAttribute } from '../utils/change-attribute.js';
 import { connectSdk } from '../utils/connect-sdk.js';
 import { getRandomInt } from '../utils/random.js';
 import { Address } from '@unique-nft/sdk/utils';
-import { AccountTokensResult } from '@unique-nft/substrate-client/tokens';
 
 type ResponseData = {
   message: string;
@@ -18,15 +17,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(400).json({ message: 'Address is required' });
   }
   const { account, sdk } = await connectSdk();
-  const tokensResult: AccountTokensResult = await sdk.token.accountTokens({
+  const tokensResult = await sdk.token.accountTokens({
     collectionId: 3288,
     address: address,
   });
   const token = tokensResult.tokens[0];
-  const usersToken = await sdk.token.properties(token);
-  console.log(usersToken);
-  if (token.error) {
-    res.status(401).json({ message: token.error.message });
+  if (!token) {
+    res.status(400).json({ message: 'No tokens found' });
   }
-  res.status(200).json(token);
+  const usersToken = await sdk.token.properties(token);
+  // if (token.error) {
+  //   res.status(401).json({ message: token.error.message });
+  // }
+  res.status(200).json(usersToken);
 }
