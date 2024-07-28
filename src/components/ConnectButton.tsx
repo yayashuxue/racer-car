@@ -265,7 +265,7 @@ export const CustomConnectButton = () => {
               padding: '4px 8px', // Padding
             }}
           >
-            {ethBalance.toFixed(3).toString()} ETH
+            {ethBalance.toFixed(0).toString()} UNQ
           </StyledMenuItem>
           <StyledMenuItem
             onClick={() => {

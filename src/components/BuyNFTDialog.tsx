@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { CloseDialogButton } from 'src/components/CloseDialogButton';
 import {OPERATOR_ADDRESS, POKER_ABI, POKER_ADDRESS} from 'src/constants';
 import { useMintNFT } from 'src/hook/useMintNFT'; 
-import {baseSepolia} from 'viem/chains';
+import { opal } from '../../config';
 import {useWatchContractEvent} from 'wagmi';
 import * as z from 'zod';
 import {apiUrl, config} from '../../config';
@@ -70,8 +70,8 @@ export const BuyNFTDialog = ({ setOwner, row, open, handleClose }: Props) => {
   const address = user?.wallet?.address;
 
   useEffect(() => {
-    if (wallet && Number(wallet.chainId) !== baseSepolia.id) {
-      wallet.switchChain(baseSepolia.id);
+    if (wallet && Number(wallet.chainId) !== opal.id) {
+      wallet.switchChain(opal.id);
     }
   }, [wallet]);
   const [isListingSuccessful, setIsListingSuccessful] = useState(false);
@@ -125,7 +125,7 @@ useEffect(() => {
       setOwner(address);
       setIsPurchaseSuccessful(true);
       // Show success message
-      showSuccess('NFT listed purhcased successfully at ' + price + ' ETH');
+      showSuccess('NFT listed purhcased successfully at ' + price + ' UNQ');
     } else {
       // Show error message
       showError('Error: ' + response.status + ' ' + response.statusText);

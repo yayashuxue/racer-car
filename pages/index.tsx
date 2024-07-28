@@ -53,7 +53,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const airdrop = async () => {
-      showSuccess('Airdropping base Sepolia ETH...');
+      showSuccess('Airdropping base Sepolia UNQ...');
       const response = await fetch(`${apiUrl}/airdrop`, {
         method: 'POST',
         headers: {

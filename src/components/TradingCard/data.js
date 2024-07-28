@@ -34,12 +34,12 @@ export const POKEMON_ATTRIBUTES = {
   name: '0x0FA0..25dF',
   power: {
     name: 'Note:',
-    description: 'What everone has ...',
+    description: 'What everyone has ...',
     level: 1200, // total scores
   },
-  Fuel: 'Grass',
+  Fuel: 'Fairy',
   retreatCost: 2,
-  type: 'default',
+  type: 'fairy',
   AddOn: 'Water',
   weightPounds: 35,
 };

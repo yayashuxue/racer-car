@@ -9,12 +9,11 @@ import { OpponentDetail } from 'src/components/OpponentDetail';
 import { useTokenBalance } from 'src/apihook/useTokenBalance';
 import styles from 'styles/Home.module.css';
 import { FixedSizeGrid as Grid } from 'react-window';
-import { baseSepolia } from 'viem/chains';
 import { apiUrl } from 'config';
 import { useSnackBar } from 'src/hook/useSnackBar';
 import Card from 'src/components/TradingCard/Card';
 import { POKEMON_ATTRIBUTES } from 'src/components/TradingCard/data';
-
+import { opal } from 'config';
 export interface NFTTableData {
   tokenId: string;
   cardNumber: number;
@@ -109,8 +108,8 @@ const Home: NextPage = () => {
   }, [authenticated, ready, user?.twitter, user]);
 
   useEffect(() => {
-    if (wallets && wallets[0] && Number(wallets[0].chainId) !== baseSepolia.id) {
-      wallets[0].switchChain(baseSepolia.id);
+    if (wallets && wallets[0] && Number(wallets[0].chainId) !== opal.id) {
+      wallets[0].switchChain(opal.id);
     }
   }, [wallets]);
 
@@ -278,7 +277,9 @@ const Home: NextPage = () => {
                 🚗
               </Box>
             </Typography>
-            <Card image={'/racer-car-elements/car-0.png'} />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Card image={'/racer-car-elements/car-0.png'} />
+            </div>
             {/* <Box mt={2}>
               {Object.keys(data).length === 0 ? (
                 <>
