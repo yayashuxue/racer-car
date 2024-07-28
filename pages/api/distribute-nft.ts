@@ -2,10 +2,7 @@ import { apiUrl } from 'config';
 import { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'node-fetch';
 
-import { changeAttribute } from '../utils/change-attribute.js';
 import { connectSdk } from '../utils/connect-sdk.js';
-import { getRandomInt } from '../utils/random.js';
-import { Address } from '@unique-nft/sdk/utils';
 
 type ResponseData = {
   message: string;
@@ -23,8 +20,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   });
   if (tokensResult.tokens.length > 0) {
     const token = tokensResult.tokens[0];
-    const usersToken = await sdk.token.properties(token);
-    res.status(200).json(usersToken);
+    const v2Result = await sdk.token.getV2({
+      tokenId: tokensResult.tokens[0].tokenId,
+      collectionId: 3288,
+    });
+    res.status(200).json({
+      address: v2Result.owner,
+      totalScore: v2Result.attributes.find((a) => a.trait_type === 'Total Score').value,
+      points: String(v2Result.attributes.find((a) => a.trait_type === 'High Score').value),
+      carLevel: v2Result.attributes.find((a) => a.trait_type === 'Car Level').value,
+    });
   }
   const token = await sdk.token.createV2({
     collectionId: 3288,
@@ -45,9 +50,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       },
     ],
   });
-  const usersToken = await sdk.token.properties(token.parsed);
   if (token.error) {
     res.status(401).json({ message: token.error.message });
   }
-  res.status(200).json(usersToken);
+
+  res.status(200).json({ address: address, totalScore: 0, points: 0, carLevel: 0 });
 }
