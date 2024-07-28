@@ -5,33 +5,23 @@ import { useEffect, useState } from 'react';
 import { LeaderboardData, LeaderboardTable } from 'src/components/Table';
 import { Title } from 'src/components/Title';
 import { useRouter } from 'next/router';
-import {apiUrl} from 'config';
+import { apiUrl } from 'config';
 
 const Home: NextPage = () => {
   const router = useRouter();
-    const [data, setData] = useState<LeaderboardData[]>([]);
+  const [data, setData] = useState<LeaderboardData[]>([]);
   useEffect(() => {
-    fetch(`${apiUrl}/getLeaderboard`, {
+    fetch(`/api/leaderboard`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         // Transform the data to match the expected structure
-        const transformedData = data.leaderboard.map((item: any, index: number) => ({
-          id: index + 1,
-          address: item.address,
-          balance: item.balance,
-          twitter: item.twitter,
-        }));
-        setData(transformedData);
+        console.log(data);
+        setData(data);
       })
       .catch((error) => {
         console.error('Failed to fetch data:', error);
