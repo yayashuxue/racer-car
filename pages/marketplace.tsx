@@ -1,21 +1,30 @@
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Title } from 'src/components/Title';
 import { useRouter } from 'next/router';
-import {useAccount, useBalance} from 'wagmi';
-import {usePrivy, useWallets} from '@privy-io/react-auth';
+import { useAccount, useBalance } from 'wagmi';
+import { usePrivy, useWallets } from '@privy-io/react-auth';
 import AnimatedCard from 'src/components/AnimatedCard';
 import StaticCard from 'src/components/StaticCard';
 import { OpponentDetail } from 'src/components/OpponentDetail';
 import styles from 'styles/Home.module.css';
 import { FixedSizeGrid as Grid } from 'react-window';
-import {set} from 'lodash';
-import {baseSepolia} from 'viem/chains';
-import {number} from 'zod';
-import {apiUrl, config} from '../config';
-import {BuyNFTDialog} from 'src/components/BuyNFTDialog';
+import { set } from 'lodash';
+import { number } from 'zod';
+import { apiUrl, config } from '../config';
+import { BuyNFTDialog } from 'src/components/BuyNFTDialog';
 
 const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => {
   const rarityValue = parseInt(rarity, 10);
@@ -29,7 +38,6 @@ const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => 
     return 'Legendary';
   }
 };
-
 
 export interface NFTMarketPlaceData {
   tokenId: string;
@@ -52,7 +60,6 @@ function numberToCard(cardNumber: number): string {
 
   return `${rank}${suit}`;
 }
-
 
 const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
   data,
@@ -133,7 +140,6 @@ const NFTMarketPlaceData: React.FC<NFTTableProps> = ({
   const width = Math.min(windowDimensions.width * 0.9, 479); // 90% of the window width
   const numColumns = Math.floor(width / itemWidth);
   const numRows = Math.ceil(dataArray.length / numColumns);
-
 
   // Calculate the total width of all cells
   const totalCellWidth = numColumns * itemWidth;
