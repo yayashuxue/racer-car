@@ -61,6 +61,7 @@ const Home: NextPage = () => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
+        console.log('succeed');
 
         const data = await response.json();
         console.log(data.message); // Handle the response data as needed
