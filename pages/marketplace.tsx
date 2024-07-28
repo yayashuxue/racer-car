@@ -22,11 +22,9 @@ import { OpponentDetail } from 'src/components/OpponentDetail';
 import styles from 'styles/Home.module.css';
 import { FixedSizeGrid as Grid } from 'react-window';
 import { set } from 'lodash';
-import { baseSepolia } from 'viem/chains';
 import { number } from 'zod';
 import { apiUrl, config } from '../config';
 import { BuyNFTDialog } from 'src/components/BuyNFTDialog';
-import { stat } from 'fs';
 
 const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => {
   const rarityValue = parseInt(rarity, 10);
