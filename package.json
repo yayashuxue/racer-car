@@ -24,6 +24,10 @@
     "@safe-global/safe-apps-sdk": "^9.0.0",
     "@tanstack/react-query": "^5.37.1",
     "@types/lodash": "^4.17.0",
+    "@unique-nft/accounts": "^0.3.7",
+    "@unique-nft/sdk": "^0.7.7",
+    "@unique-nft/solidity-interfaces": "^0.70.0",
+    "@unique-nft/sr25519": "^0.0.2",
     "bignumber.js": "^9.1.2",
     "copy-webpack-plugin": "^12.0.2",
     "ethers": "^6.11.1",
@@ -40,6 +44,7 @@
     "sass": "^1.77.8",
     "socket.io-client": "^4.7.5",
     "three": "^0.164.1",
+    "tweetnacl-ts": "^1.0.3",
     "viem": "^2.8.12",
     "wagmi": "^2.9.2",
     "zod": "^3.22.4"

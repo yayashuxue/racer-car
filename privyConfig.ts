@@ -1,7 +1,8 @@
-import type {PrivyClientConfig} from '@privy-io/react-auth';
-import {baseSepolia} from 'viem/chains';
+import type { PrivyClientConfig } from '@privy-io/react-auth';
+import { WsProvider } from '@polkadot/api';
+import { nativeEnum } from 'zod';
+import { opal } from 'config';
 
-// Replace this with your Privy config
 export const privyConfig: PrivyClientConfig = {
   // embeddedWallets: {
   //   createOnLogin: 'users-without-wallets',
@@ -12,6 +13,7 @@ export const privyConfig: PrivyClientConfig = {
   // appearance: {
   //   showWalletLoginFirst: true,
   // },
-  defaultChain: baseSepolia, 
-  supportedChains: [baseSepolia],
+
+  defaultChain: opal,
+  supportedChains: [opal],
 };

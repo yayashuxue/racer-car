@@ -175,6 +175,7 @@ const Home: NextPage = () => {
           <Box display='flex' justifyContent='center'>
             <Box width={{ xs: '100%', md: '50%' }} textAlign='center'>
               <AnimatedCard cardNumber={-1} rarity={'Rare'} />
+
               <Typography>Connect Wallet To See Your Profile</Typography>
               <Box
                 display='flex'

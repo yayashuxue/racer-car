@@ -13,9 +13,8 @@ import { useTokenBalance } from 'src/apihook/useTokenBalance';
 import router from 'next/router';
 import { ethers } from 'ethers';
 import ConnectTwitterDialog from './ConnectTwitterDialog';
-import {apiUrl} from 'config';
-import {updateUser} from 'pages/profile';
-import {baseSepolia} from 'viem/chains';
+import { apiUrl, opal } from 'config';
+import { updateUser } from 'pages/profile';
 
 const StyledButton = styled(Button)`
   background-color: ${({ theme }) => (theme.palette.mode === 'light' ? '#6999FF' : '#000205')};
@@ -24,7 +23,7 @@ const StyledButton = styled(Button)`
 `;
 
 const StyledMenuItem = styled(MenuItem)`
-  background-color: ${({ theme }) => (theme.palette.mode === 'light' ? 'white' : 'black')};
+  background-color: $ {({ theme }) => (theme.palette.mode === 'light' ? 'white' : 'black')};
   color: ${({ theme }) => (theme.palette.mode === 'light' ? 'black' : 'white')};
   border-radius: 8px;
   border: 1px solid ${({ theme }) => (theme.palette.mode === 'light' ? 'black' : 'white')};
@@ -41,7 +40,6 @@ export const CustomConnectButton = () => {
   const { wallets } = useWallets();
   const { showSuccess } = useSnackBar();
 
-  
   const embeddedWallet = wallets.find((wallet) => wallet.walletClientType === 'privy');
 
   const { displayName } = useGetEnsDetail();
@@ -70,7 +68,7 @@ export const CustomConnectButton = () => {
     const fetchBalance = async () => {
       if (wallets.length > 0) {
         const provider = await wallets[0].getEthersProvider();
-        const balance = await provider.getBalance(user?.wallet?.address ?? "");
+        const balance = await provider.getBalance(user?.wallet?.address ?? '');
         setEthBalance(new BigNumber(balance.toString()).div(1e18));
       }
     };
@@ -101,23 +99,20 @@ export const CustomConnectButton = () => {
               throw new Error('Network response was not ok');
             }
           }
-          
         } catch (error) {
           console.error('Error:', error);
         }
       }
     };
 
-
     if (ready && authenticated) {
       fetchBalance();
-      if (wallets && wallets[0] && Number(wallets[0].chainId) !== baseSepolia.id) {
-        wallets[0].switchChain(baseSepolia.id);
+      if (wallets && wallets[0] && Number(wallets[0].chainId) !== opal.id) {
+        wallets[0].switchChain(opal.id);
       }
       connectWallet();
     }
   }, [ready, authenticated, wallets, user]);
-
 
   useEffect(() => {
     if (ready && authenticated && !user?.twitter && !localStorage.getItem('dialogShown')) {
@@ -130,16 +125,14 @@ export const CustomConnectButton = () => {
     const updateUserIfTwitterExists = async () => {
       if (
         authenticated &&
-        ready && 
+        ready &&
         user?.twitter &&
-          user &&
-          user.wallet &&
-          user.wallet.address !== '0x' &&
-          user.wallet.address != ''
+        user &&
+        user.wallet &&
+        user.wallet.address !== '0x' &&
+        user.wallet.address != ''
       ) {
         try {
-          
-          
           await updateUser(user?.wallet?.address, user?.twitter.username);
         } catch (error) {
           console.error('Error:', error);
@@ -148,7 +141,7 @@ export const CustomConnectButton = () => {
     };
 
     updateUserIfTwitterExists();
-  }, [authenticated, ready, user?.twitter, user?.wallet?.address]); 
+  }, [authenticated, ready, user?.twitter, user?.wallet?.address]);
 
   const closeDialog = () => {
     setDialogShown(false);
@@ -197,9 +190,7 @@ export const CustomConnectButton = () => {
             display: 'flex',
             alignItems: 'center',
           }}
-          endIcon={
-            ' ⛽️'
-          }
+          endIcon={' ⛽️'}
         >
           {tokenBalance}
         </StyledButton>
