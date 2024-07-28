@@ -26,7 +26,7 @@ export const config = createConfig({
 
 // export const apiUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://api.walletpoker.xyz';
 const useLocalApi = process.env.NEXT_PUBLIC_USE_LOCAL_API === 'true';
-export const apiUrl = useLocalApi ? 'http://localhost:8000' : 'https://api.walletpoker.xyz';
+export const apiUrl = 'http://localhost:3000';
 // let apiUrl = 'https://api.walletpoker.xyz';
 // if (process.env.REACT_APP_USE_LOCALHOST === 'true') {
 //   apiUrl = 'http://localhost:8000';
