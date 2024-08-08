@@ -2,23 +2,15 @@ import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
 import { PrivyProvider } from '@privy-io/react-auth';
-// Make sure to import these from `@privy-io/wagmi`, not `wagmi`
 import { WagmiProvider } from '@privy-io/wagmi';
 import '../styles/GameHandler.css';
-
 import { ThemeProvider, createTheme } from '@mui/material';
-// import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout } from '../src/Layout';
-// import { AccountsContextProvider } from '../hidden/accounts/AccountsContext';
-// import { AccountsPage } from '../hidden/pages/Accounts';
-// import { SdkProvider } from '../hidden/sdk/SdkContext';
-// import { SignByLocalSignerModalProvider } from '../hidden/signModal/SignByLocalSignerModalContext';
 import { SnackbarProvider } from 'notistack';
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { config } from '../config';
 import { privyConfig } from '../privyConfig';
-
 import { getDesignTokens } from 'src/theme';
 import '@fontsource/aldrich/400.css';
 

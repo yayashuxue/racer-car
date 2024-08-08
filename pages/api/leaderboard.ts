@@ -12,10 +12,10 @@ type ResponseData = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
   const { account, sdk } = await connectSdk();
 
-  console.log('update');
   const tokensResult: AccountTokensResult = await sdk.collection.tokens({
     collectionId: 3474,
   });
+
   const tokens = await Promise.all(
     tokensResult.ids.map(async (token) => {
       const v2Result = await sdk.token.getV2({
