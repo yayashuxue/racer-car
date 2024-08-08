@@ -1,13 +1,23 @@
-import { Box, Button, Container, IconButton, styled, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Button, Container, IconButton, styled, useTheme, useMediaQuery, Typography } from '@mui/material';
 import { ColorModeContext } from 'pages/_app';
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
+
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+
 import Image from 'next/image';
 import { CustomConnectButton } from 'src/components/ConnectButton';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import BigNumber from 'bignumber.js';
+import { useGetPlayerState } from 'src/hook/useGetPlayerState';
+import { useAccount } from 'wagmi';
 import { useSnackBar } from 'src/hook/useSnackBar';
+import socketIOClient from 'socket.io-client';
+
 import Head from 'next/head';
+import { getTableData } from 'pages/api/getTable';
+import { apiUrl } from 'config';
 import { usePrivy } from '@privy-io/react-auth';
 
 interface LayoutProps {
@@ -40,11 +50,12 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 export const Layout = ({ children }: LayoutProps) => {
+
   const { showSuccess, showError } = useSnackBar();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const { user } = usePrivy();
+  const { authenticated, user } = usePrivy();
   const address = user?.wallet?.address;
   const colorMode = useContext(ColorModeContext);
   const isLightTheme = theme.palette.mode === 'light';
@@ -52,8 +63,24 @@ export const Layout = ({ children }: LayoutProps) => {
 
   const { pathname, query } = router;
 
+  const [isWatcher, setIsWatcher] = useState(true);
+  const leaveGame = async (address: string, seatI: number) => {
+    // TODO: Implement
+    // if (!response.ok) {
+    //   throw new Error('Network response was not ok');
+    // }
+    // if (process.env.NODE_ENV === 'development') {
+    //   showSuccess('Left table successfully');
+    // } else {
+    //   showSuccess('Left table successfully');
+    // }
+  router.push('/');
+  };
+
+
   const handleLeave = async () => {
-    router.push('/');
+      router.push('/');
+      // TODO: add leaveGame
   };
   return (
     <>
@@ -270,3 +297,6 @@ export const Layout = ({ children }: LayoutProps) => {
     </>
   );
 };
+// function showSuccess(arg0: string) {
+//   throw new Error('Function not implemented.');
+// }

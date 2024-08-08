@@ -1,4 +1,3 @@
-// Could be useful
 import { Box, Link, Typography, useTheme } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
 import { maskAddress } from 'src/utils/maskAddress';
@@ -53,7 +52,7 @@ export const useSnackBar = () => {
             horizontal: 'center',
           },
           variant: 'info',
-          autoHideDuration: 2500,
+          autoHideDuration: 2500
         }
       ),
   };

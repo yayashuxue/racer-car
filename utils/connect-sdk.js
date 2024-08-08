@@ -4,10 +4,12 @@ import config from './config.js';
 
 export const connectSdk = async () => {
   const account = Sr25519Account.fromUri(config.mnemonic);
+
   const sdk = new Sdk({
     baseUrl: CHAIN_CONFIG.opal.restUrl,
     account,
   });
+
   return {
     account,
     sdk,

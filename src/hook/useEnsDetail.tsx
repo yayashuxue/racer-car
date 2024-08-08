@@ -1,8 +1,10 @@
-//  Not in use Could be useful
+import { getEnsName } from '@wagmi/core';
+
 import { http, createConfig } from '@wagmi/core';
 import { mainnet, sepolia } from '@wagmi/core/chains';
+import { useEffect, useState } from 'react';
 import { maskAddress } from 'src/utils/maskAddress';
-import { useEnsName } from 'wagmi';
+import { useAccount, useEnsName } from 'wagmi';
 import { useEnsAvatar } from 'wagmi';
 import { normalize } from 'viem/ens';
 import { usePrivy } from '@privy-io/react-auth';

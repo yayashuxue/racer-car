@@ -1,3 +1,5 @@
+import { first } from 'lodash';
+
 export const findByTypeAndLevel = (type: any, level: any) => {
   return staticData.find((item) => item.type === type && item.level === level) || null;
 };
@@ -123,4 +125,5 @@ export const staticData = [
     type: 'gas',
     level: 2,
   },
+  // Add more elements as needed
 ];
