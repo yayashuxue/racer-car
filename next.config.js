@@ -3,7 +3,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: true, // Set to false to disable linting during builds
+    ignoreDuringBuilds: true,
   },
   webpack: (config, { isServer }) => {
     // Add .wasm file support

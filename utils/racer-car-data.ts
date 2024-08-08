@@ -1,4 +1,4 @@
-import {first} from "lodash";
+import { first } from 'lodash';
 
 export const findByTypeAndLevel = (type: any, level: any) => {
   return staticData.find((item) => item.type === type && item.level === level) || null;
@@ -8,7 +8,7 @@ export const staticData = [
   {
     cost: 0,
     imageUrl: '/racer-car-elements/car-0.png',
-    specialEffects: "Everyone first car",
+    specialEffects: 'Everyone first car',
     name: 'Basic Car',
     type: 'car',
     level: 0,

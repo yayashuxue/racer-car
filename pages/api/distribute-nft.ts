@@ -2,7 +2,7 @@ import { apiUrl } from 'config';
 import { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'node-fetch';
 
-import { connectSdk } from '../utils/connect-sdk.js';
+import { connectSdk } from '../../utils/connect-sdk.js';
 
 type ResponseData = {
   message: string;
