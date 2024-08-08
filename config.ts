@@ -14,8 +14,8 @@ export const opal: Chain = {
     default: { http: ['https://rpc-opal.unique.network/'] },
   },
   blockExplorers: {
-    default: { name: 'unq', url: 'https://uniquescan.io/' }
-  }
+    default: { name: 'unq', url: 'https://uniquescan.io/' },
+  },
 };
 export const config = createConfig({
   chains: [opal],

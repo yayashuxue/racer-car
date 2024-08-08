@@ -10,4 +10,6 @@ const getConfig = () => {
   };
 };
 
-export const config = getConfig();
+const config = getConfig();
+
+export default config;
