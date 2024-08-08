@@ -1,7 +1,7 @@
 import { apiUrl } from 'config';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { connectSdk } from '../../utils/connect-sdk.js';
+import { connectSdk } from '../utils/connect-sdk.js';
 
 import { AccountTokensResult } from '@unique-nft/substrate-client/tokens';
 

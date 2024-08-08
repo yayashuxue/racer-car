@@ -25,7 +25,7 @@ import { set } from 'lodash';
 import { number } from 'zod';
 import { apiUrl, config } from '../config';
 import { BuyNFTDialog } from 'src/components/BuyNFTDialog';
-import { staticData } from '../utils/racer-car-data';
+import { staticData } from './racer-car-data';
 const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => {
   const rarityValue = parseInt(rarity, 10);
   if (rarityValue <= 50) {
@@ -38,6 +38,7 @@ const mapRarity = (rarity: string): 'Common' | 'Rare' | 'Epic' | 'Legendary' => 
     return 'Legendary';
   }
 };
+
 
 export interface NFTMarketPlaceData {
   tokenId: string;

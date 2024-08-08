@@ -1,7 +1,7 @@
 import { POKEMON_TYPES, POKEMON_ATTRIBUTES } from './data';
 import { Box } from '@mui/material';
 import styles from './Card.module.scss';
-import { staticData, findByTypeAndLevel } from 'utils/racer-car-data';
+import { staticData, findByTypeAndLevel} from 'pages/racer-car-data';
 import { maskAddress } from 'src/utils/maskAddress';
 
 const mapRarity = (level) => {
