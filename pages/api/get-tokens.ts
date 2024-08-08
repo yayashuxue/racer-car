@@ -2,9 +2,9 @@ import { apiUrl } from 'config';
 import { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'node-fetch';
 
-import { changeAttribute } from '../utils/change-attribute.js';
-import { connectSdk } from '../utils/connect-sdk.js';
-import { getRandomInt } from '../utils/random.js';
+import { changeAttribute } from '../../utils/change-attribute.js';
+import { connectSdk } from '../../utils/connect-sdk.js';
+import { getRandomInt } from '../../utils/random.js';
 import { Address } from '@unique-nft/sdk/utils';
 
 type ResponseData = {

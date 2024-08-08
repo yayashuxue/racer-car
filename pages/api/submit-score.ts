@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { changeAttribute } from '../utils/change-attribute.js';
-import { connectSdk } from '../utils/connect-sdk.js';
-import { getRandomInt } from '../utils/random.js';
+import { changeAttribute } from '../../utils/change-attribute.js';
+import { connectSdk } from '../../utils/connect-sdk.js';
+import { getRandomInt } from '../../utils/random.js';
 import { Address } from '@unique-nft/sdk/utils';
 
 type ResponseData = {

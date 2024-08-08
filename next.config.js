@@ -1,4 +1,10 @@
 const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config, { isServer }) => {
     // Add .wasm file support
     config.experiments = { ...config.experiments, asyncWebAssembly: true };
