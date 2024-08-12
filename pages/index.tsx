@@ -13,7 +13,7 @@ import { useSnackBar } from 'src/hook/useSnackBar';
 import { useRouter } from 'next/router';
 // import {WithdrawGlobalChipDialog} from 'src/components/WithdrawGlobalChipDialog';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
-import {ShowCardDialog} from 'src/components/ShowCardDialog';
+import { ShowCardDialog } from 'src/components/ShowCardDialog';
 
 export type TableData = {
   tableId: number;
@@ -23,8 +23,6 @@ export type TableData = {
   buyInAmount: any;
   // action: string;
 };
-
-
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -56,7 +54,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     const airdrop = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/distribute-nft?address=${address}`, {
+        const response = await fetch(`/api/distribute-nft?address=${address}`, {
           method: 'GET', // or 'POST' if your endpoint expects a POST request
         });
 
@@ -69,19 +67,17 @@ const Home: NextPage = () => {
         setShowCardOpen(true);
         console.log(data); // Handle the response data as needed
         setData(data);
-
       } catch (error) {
         console.error('Failed to fetch:', error);
       }
     };
 
     if (address && !airdropRequested) {
-      console.log('here')
+      console.log('here');
       airdrop();
       setAirdropRequested(true);
     }
   }, [address, airdropRequested]);
-
 
   return (
     <Box>

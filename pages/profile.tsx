@@ -41,7 +41,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/distribute-nft?address=${address}`, {
+        const response = await fetch(`/api/distribute-nft?address=${address}`, {
           method: 'GET', // or 'POST' if your endpoint expects a POST request
         });
 
@@ -62,48 +62,46 @@ const Home: NextPage = () => {
     }
   }, [address]);
 
+  const cardRef = useRef(null);
 
-    const cardRef = useRef(null);
+  const handleExport = () => {
+    if (cardRef.current === null) {
+      return;
+    }
 
-    const handleExport = () => {
-      if (cardRef.current === null) {
-        return;
-      }
+    toPng(cardRef.current)
+      .then((dataUrl: string) => {
+        const link = document.createElement('a');
+        link.download = 'card.png';
+        link.href = dataUrl;
+        link.click();
+        // Twitter redirect with pre-filled tweet
+        const tweetText = encodeURIComponent(
+          "I'm top player on Rac3r at rac3r.vercel.app powered by @Unique_NFTchain & @Polkadot"
+        );
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+        window.open(twitterUrl, '_blank', 'noopener,noreferrer');
+      })
+      .catch((err: any) => {
+        console.error('Failed to export card as PNG', err);
+      });
+  };
 
-      toPng(cardRef.current)
-        .then((dataUrl: string) => {
-          const link = document.createElement('a');
-          link.download = 'card.png';
-          link.href = dataUrl;
-          link.click();
-          // Twitter redirect with pre-filled tweet
-          const tweetText = encodeURIComponent(
-            "I'm top player on Rac3r at rac3r.vercel.app powered by @Unique_NFTchain & @Polkadot"
-          );
-          const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
-          window.open(twitterUrl, '_blank', 'noopener,noreferrer');
-        })
-        .catch((err: any) => {
-          console.error('Failed to export card as PNG', err);
-        });
-    };
+  const { showError } = useSnackBar();
+  useEffect(() => {
+    if (addressFromUrl) {
+      setAddress(Array.isArray(addressFromUrl) ? addressFromUrl[0] : addressFromUrl);
+      console.log('addressFromUrl:', addressFromUrl);
+    } else {
+      if (ready && authenticated) setAddress(user?.wallet?.address ?? '');
+    }
+  }, [addressFromUrl, ready, authenticated, user]);
 
-    const { showError } = useSnackBar();
-    useEffect(() => {
-      if (addressFromUrl) {
-        setAddress(Array.isArray(addressFromUrl) ? addressFromUrl[0] : addressFromUrl);
-        console.log('addressFromUrl:', addressFromUrl);
-      } else {
-        if (ready && authenticated) setAddress(user?.wallet?.address ?? '');
-      }
-    }, [addressFromUrl, ready, authenticated, user]);
-
-    useEffect(() => {
-      if (address === '') {
-        login();
-      }
-    }, [address]);
-
+  useEffect(() => {
+    if (address === '') {
+      login();
+    }
+  }, [address]);
 
   useEffect(() => {
     if (wallets && wallets[0] && Number(wallets[0].chainId) !== opal.id) {
@@ -117,9 +115,9 @@ const Home: NextPage = () => {
   const [openedNFTMetadata, setOpenedNFTMetadata] = useState<any>({});
   const [twitter, setTwitter] = useState(null);
 
-console.log('Address:', address);
-console.log('Data:', data);
-console.log('Condition:', !!(address && address !== '' && address !== '0x0' && data));
+  console.log('Address:', address);
+  console.log('Data:', data);
+  console.log('Condition:', !!(address && address !== '' && address !== '0x0' && data));
   if (address === '') {
     return (
       <div className={styles.profileContainer}>

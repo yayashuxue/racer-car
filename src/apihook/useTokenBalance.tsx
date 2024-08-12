@@ -7,7 +7,7 @@ export const useTokenBalance = (address: string) => {
   useEffect(() => {
     const fetchTokenBalance = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/distribute-nft?address=${address}`);
+        const response = await fetch(`/api/distribute-nft?address=${address}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -25,5 +25,3 @@ export const useTokenBalance = (address: string) => {
 
   return tokenBalance;
 };
-
-
