@@ -38,7 +38,6 @@ const Home: NextPage = () => {
   // const { refetch } = balance;
   const hasSetOpenGetTokenBeenCalled = useRef(false);
 
-  const { isLoading, fetchTables } = useFetchTables(setData);
   const { user } = usePrivy();
   const address = user?.wallet?.address;
 

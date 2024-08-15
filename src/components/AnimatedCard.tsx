@@ -27,7 +27,7 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({ cardNumber = -1, rarity = '
 
       // Load textures
       const frontTexture = new THREE.TextureLoader().load(
-        cardNumber == -1 ? '/cards/spade.png' : `/poker-cards/poker-${cardNumber}.png`,
+        cardNumber == -1 ? '/racer-car-elements/car-0.png' : `/racer-car-elements/car-0.png`,
         (texture) => {
           texture.colorSpace = THREE.SRGBColorSpace;
         }
@@ -35,9 +35,12 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({ cardNumber = -1, rarity = '
       // const frontTexture = new THREE.TextureLoader().load(
       //   '/cards/spade.png'
       // );
-      const backTexture = new THREE.TextureLoader().load('/cards/landing-back.png', (texture) => {
-        texture.colorSpace = THREE.SRGBColorSpace;
-      });
+      const backTexture = new THREE.TextureLoader().load(
+        '/racer-car-elements/car-0.png',
+        (texture) => {
+          texture.colorSpace = THREE.SRGBColorSpace;
+        }
+      );
 
       // Card geometry and materials
       const cardGeometry = new THREE.PlaneGeometry(80, 120);
